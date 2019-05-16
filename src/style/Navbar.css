@@ -1,0 +1,10 @@
+#nav-bar-item {
+  background-color: #1b1c1d;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+#nav-bar-item:hover {
+  color: #ff7a02!important;
+
+}
