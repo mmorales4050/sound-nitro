@@ -1,0 +1,11 @@
+.main-view {
+  height: calc(100% - 90px);
+  width: calc(100% - 230px);
+  float: right;
+}
+
+.main-view-mobile {
+  margin-top: 70px;
+  height: calc(100% - (90px + 70px));
+  width: 100%;
+}

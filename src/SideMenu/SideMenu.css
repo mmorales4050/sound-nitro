@@ -1,0 +1,23 @@
+span {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+#header {
+  padding-top: 26px;
+  color: white;
+}
+
+#menu-item {
+  padding-left: 30px;
+  text-align: left;
+}
+
+#menu-icon {
+  float: left;
+}
+
+#side-menu {
+  width: 230px;
+  z-index: 0;
+}
