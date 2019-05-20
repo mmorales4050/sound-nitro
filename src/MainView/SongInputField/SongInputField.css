@@ -1,0 +1,10 @@
+#song-input-item {
+  width: 100%;
+
+
+}
+
+#horizontal-input-item-list {
+    display: flex;
+    justify-content: center;
+}
