@@ -6,5 +6,12 @@
 
 #horizontal-input-item-list {
     display: flex;
-    justify-content: center;
+}
+
+#file-name {
+  width: 200px;
+}
+
+#active {
+  color: #ff7a02;
 }

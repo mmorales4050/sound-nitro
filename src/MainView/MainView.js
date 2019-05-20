@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { isMobileOnly } from 'react-device-detect'
 import UploadPage from './UploadPage/UploadPage'
+import SongsPage from './SongsPage/SongsPage'
 import './MainView.css'
 
 class MainView extends Component {
@@ -14,7 +15,7 @@ class MainView extends Component {
           "main-view"
         }
       >
-      <UploadPage />
+      <SongsPage />
       </div>
     );
   }

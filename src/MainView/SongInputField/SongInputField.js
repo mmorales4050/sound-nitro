@@ -15,7 +15,7 @@ class SongInputField extends Component {
 <List.Item>
 <List.Content>
 <List.Header>File</List.Header>
-<Label>{this.props.song.name}</Label>
+<Label id="file-name">{this.props.song.name}</Label>
 </List.Content>
 </List.Item>
   <List.Item>
