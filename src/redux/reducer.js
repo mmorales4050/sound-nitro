@@ -1,9 +1,10 @@
 
 let initialState = {
   files: [],
+  playlists: [],
   songs: [],
   current_track: {},
-  page: "songs"
+  page: "playlists"
 }
 const rootReducer = (oldState=initialState, action) => {
   switch(action.type){

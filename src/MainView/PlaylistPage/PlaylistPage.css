@@ -1,0 +1,60 @@
+.playlist-card-container {
+  padding: 30px;
+}
+
+.playlist-button {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+
+}
+
+#new-playlist-button {
+    background-color: #fe7903;
+    color: white;
+}
+
+#new-playlist-modal .header {
+  background-color:rgba(0,0,0,0.0);
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#new-playlist-modal .actions {
+  background-color:rgba(0,0,0,0.0);
+  text-align: center;
+}
+#new-playlist-modal .inner-header {
+  color:white;
+  font-size: 14px;
+}
+
+#new-playlist-modal .input{
+  padding-top: 10px;
+  width: 100%;
+  color: white;
+  font-size: 56px;
+}
+
+#new-playlist-modal .input input{
+  color:white;
+  caret-color: #fe7903;
+  font-weight: bold;
+}
+
+
+#new-playlist-modal .content {
+  padding: 30px;
+  background-color: #272727;
+  height: 146px;
+}
+
+#new-playlist-modal .create-button{
+  background-color: #fe7903;
+}
+#new-playlist-modal{
+  width: 100%!important;
+  background-color:rgba(0,0,0,0.0);
+}

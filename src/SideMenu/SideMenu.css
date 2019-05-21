@@ -27,8 +27,11 @@ span {
 }
 
 #side-menu {
+  background-image: linear-gradient(#020303, #010101);
+  background-color: #010101;
   width: 230px;
   z-index: 0;
   height: calc(100% - 90px)!important;
+
 
 }

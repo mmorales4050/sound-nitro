@@ -64,7 +64,7 @@ class UploadPage extends Component {
        :
 
       <Form onSubmit={this.uploadFiles}>
-      <div>
+      <div className="upload-buttons">
         <Button as="label" htmlFor="file" color="orange">
         <Icon name='file' />
         Choose Songs

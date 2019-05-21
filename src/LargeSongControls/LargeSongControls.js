@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react'
+import { Menu, Image} from 'semantic-ui-react'
 import './LargeSongControls.css'
 import {connect} from 'react-redux'
 
@@ -13,6 +13,15 @@ class LargeSongControls extends Component {
         fixed="bottom"
         id="bottom-menu"
       >
+      <Menu.Item id="now-playing">
+      <Image />
+      </Menu.Item >
+      <Menu.Item >
+
+      </Menu.Item >
+      <Menu.Item >
+
+      </Menu.Item >
 
       </Menu>
     );

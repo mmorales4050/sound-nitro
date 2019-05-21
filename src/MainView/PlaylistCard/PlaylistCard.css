@@ -1,0 +1,23 @@
+#album-card {
+  background-color:rgba(0,0,0,0.0);
+  box-shadow: none;
+  height: 300px;
+  width: 250px;
+}
+
+.place-holder {
+  height: 250px;
+  width: 250px;
+  background-color: #272727;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+#album-info{
+  background-color:rgba(0,0,0,0.0);
+  text-align:center;
+  color: white;
+  font-size: 15px;
+}
