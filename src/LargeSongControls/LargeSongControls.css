@@ -1,4 +1,108 @@
 #bottom-menu {
   height: 90px;
   background-color: #272727!important;
+  display:flex;
+  justify-content: space-between;
+}
+
+#bottom-menu .progress {
+  background-color: #404040;
+}
+
+#bottom-menu .bar {
+  background-color: #b3b3b3;
+}
+
+#bottom-menu .volume-controls {
+  display:flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 250px;
+  color: #b3b3b3;
+}
+#bottom-menu .volume-controls .progress{
+  width: 84px;
+  margin-top: 16px;
+}
+
+#bottom-menu:after {
+ content: none;
+}
+
+#bottom-menu .icon:hover {
+  color:white;
+}
+
+#bottom-menu .current-playlist {
+  padding-right: 30px;
+}
+
+.song-controls-item {
+  width: 40%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.song-controls {
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 224px;
+  margin-top: 30px;
+  margin-bottom: 6px;
+}
+
+.song-progress {
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.song-progress .progress{
+  width: calc(100% - 70px);
+}
+
+.song-progress .time-stamp{
+  color: #b3b3b3;
+  padding-top:7px;
+}
+
+#now-playing {
+  width: 250px;
+}
+
+#now-playing img {
+  width: 60px;
+  height: 60px;
+}
+
+#now-playing .song-info {
+  padding-left: 15px;
+}
+
+#now-playing .song-name {
+  font-size: 15px;
+}
+
+#now-playing .song-artist {
+  padding-top: 5px;
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.song-controls .icon{
+  color: #b3b3b3;
+}
+
+.song-controls #play-button{
+  font-size: 32px;
+  width:34px;
+  height:34px;
+
+}
+
+.song-controls #play-button:hover{
+  font-size: 34px;
+
 }

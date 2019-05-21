@@ -22,7 +22,7 @@ class MobileMenu extends Component {
         <Icon name='music' id="menu-icon" size="large"/>
       </Menu.Item>
       <Menu.Item as="a" id="menu-item-mobile" content="Music" onClick={()=>this.uploadPage("playlists")}>
-        <Icon name='list' id="menu-icon" size="large"/>
+        <Icon name='list alternate' id="menu-icon" size="large"/>
       </Menu.Item>
       <Menu.Item as="a" id="menu-item-mobile" content="Music" onClick={()=>this.uploadPage("audiobooks")}>
         <Icon name='book' id="menu-icon" size="large"/>

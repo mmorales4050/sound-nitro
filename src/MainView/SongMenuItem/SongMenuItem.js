@@ -8,7 +8,10 @@ class SongMenuItem extends Component {
 
   songClicked = (event) => {
     this.props.dispatch({type: "SET_AND_PLAY_CURRENT_TRACK", payload: {howl: new Howl({
-      src: [this.props.song.audio]
+      src: [this.props.song.audio],
+      onload: () => {
+        this.props.dispatch({type: "SET_DURATION"})
+      }
     }), info: this.props.song}
   })
   }

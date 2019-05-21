@@ -36,7 +36,7 @@ class SideMenu extends Component {
           <span>Songs</span>
         </Menu.Item>
         <Menu.Item as="a" id="menu-item"  onClick={()=>this.uploadPage("playlists")}>
-          <Icon name='list' id="menu-icon"/>
+          <Icon name='list alternate' id="menu-icon"/>
           <span>Playlists</span>
         </Menu.Item>
         <Menu.Item as="a" id="menu-item" onClick={()=>this.uploadPage("audiobooks")}>
