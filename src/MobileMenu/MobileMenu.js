@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import './MobileMenu.css'
 import { Menu, Icon } from 'semantic-ui-react'
+import  {connect} from 'react-redux';
 
 class MobileMenu extends Component {
 
+  uploadPage = (page) => {
+    this.props.dispatch({type: "CHANGE_PAGE", payload: page})
+  }
   render() {
     return (
       <Menu
@@ -11,10 +15,10 @@ class MobileMenu extends Component {
         fixed="top"
         id="mobile-menu"
       >
-      <Menu.Item as="a" id="menu-item" content="Upload">
+      <Menu.Item as="a" id="menu-item" content="Upload" onClick={()=>this.uploadPage("upload")}>
         <Icon name='cloud upload' id="menu-icon" size="large"/>
       </Menu.Item>
-      <Menu.Item as="a" id="menu-item" content="Upload">
+      <Menu.Item as="a" id="menu-item" content="Music" onClick={()=>this.uploadPage("songs")}>
         <Icon name='music' id="menu-icon" size="large"/>
       </Menu.Item>
       </Menu>
@@ -23,4 +27,9 @@ class MobileMenu extends Component {
 
 }
 
-export default MobileMenu;
+const mapStateToProps = (store) => ({
+  page: store.page
+})
+
+
+export default connect(mapStateToProps)(MobileMenu);

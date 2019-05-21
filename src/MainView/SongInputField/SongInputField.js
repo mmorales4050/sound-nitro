@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {List, Input, Segment, Label} from 'semantic-ui-react'
+import {List, Input, Label} from 'semantic-ui-react'
 
 import './SongInputField.css'
 

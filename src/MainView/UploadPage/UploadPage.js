@@ -56,7 +56,7 @@ class UploadPage extends Component {
 
   render() {
     return (
-      <Segment className="upload-page">
+      <div className="upload-page">
       {this.state.loading === true ?
         <Dimmer active>
         <Loader size='massive'>Loading</Loader>
@@ -67,7 +67,7 @@ class UploadPage extends Component {
       <div>
         <Button as="label" htmlFor="file" color="orange">
         <Icon name='file' />
-        Choose Song
+        Choose Songs
 
         </Button>
         <Button type="submit" className={this.state.toggleSubmit} color="orange">
@@ -88,7 +88,7 @@ class UploadPage extends Component {
           </List>
         </Form>
       }
-        </Segment>
+        </div>
     );
   }
 

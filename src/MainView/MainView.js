@@ -3,9 +3,21 @@ import { isMobileOnly } from 'react-device-detect'
 import UploadPage from './UploadPage/UploadPage'
 import SongsPage from './SongsPage/SongsPage'
 import './MainView.css'
+import {connect} from 'react-redux'
+
 
 class MainView extends Component {
 
+  showPage = () => {
+    switch(this.props.page){
+      case "songs":
+        return <SongsPage />
+      case "upload":
+        return <UploadPage />
+      default:
+        return null
+    }
+  }
   render() {
     return (
       <div
@@ -15,11 +27,15 @@ class MainView extends Component {
           "main-view"
         }
       >
-      <SongsPage />
+      {this.showPage()}
       </div>
     );
   }
 
 }
 
-export default MainView;
+const mapStateToProps = (store) => ({
+  page: store.page
+})
+
+export default connect(mapStateToProps)(MainView);

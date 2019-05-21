@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import './SideMenu.css'
 import { Header, Icon, Menu,Sidebar } from 'semantic-ui-react'
+import  {connect} from 'react-redux';
 
 class SideMenu extends Component {
+
+  uploadPage = (page) => {
+    this.props.dispatch({type: "CHANGE_PAGE", payload: page})
+  }
 
   render() {
     return (
@@ -22,11 +27,11 @@ class SideMenu extends Component {
           <Header.Content>Sound Nitro</Header.Content>
         </Header>
 
-        <Menu.Item as="a" id="menu-item" content="Upload">
+        <Menu.Item as="a" id="menu-item" onClick={()=>this.uploadPage("upload")}>
           <Icon name='cloud upload' id="menu-icon"/>
           <span>Upload</span>
         </Menu.Item>
-        <Menu.Item as="a" id="menu-item" content="Upload">
+        <Menu.Item as="a" id="menu-item" onClick={()=>this.uploadPage("songs")}>
           <Icon name='music' id="menu-icon"/>
           <span>Songs</span>
         </Menu.Item>
@@ -36,4 +41,8 @@ class SideMenu extends Component {
 
 }
 
-export default SideMenu;
+const mapStateToProps = (store) => ({
+  page: store.page
+})
+
+export default connect(mapStateToProps)(SideMenu);

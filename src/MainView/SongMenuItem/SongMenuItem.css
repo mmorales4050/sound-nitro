@@ -2,6 +2,11 @@
   padding-left: 28px;
 }
 
-#menu-item {
+#song-menu-item {
   width: 100%;
+}
+
+#song-duration {
+  float:right;
+  padding-bottom: 10px;
 }
