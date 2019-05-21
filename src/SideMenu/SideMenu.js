@@ -35,6 +35,20 @@ class SideMenu extends Component {
           <Icon name='music' id="menu-icon"/>
           <span>Songs</span>
         </Menu.Item>
+        <Menu.Item as="a" id="menu-item" onClick={()=>this.uploadPage("songs")}>
+          <Icon name='list' id="menu-icon"/>
+          <span>Playlists</span>
+        </Menu.Item>
+        <Menu.Item as="a" id="menu-item" onClick={()=>this.uploadPage("songs")}>
+          <Icon name='book' id="menu-icon"/>
+          <span>Audiobooks</span>
+        </Menu.Item>
+        <Menu.Item className="filler-item" id="menu-item">
+        </Menu.Item>
+        <Menu.Item as="a" className="account-item borderless" id="menu-item" onClick={()=>this.uploadPage("songs")}>
+          <Icon name='user' id="menu-icon"/>
+          <span>Account</span>
+        </Menu.Item>
       </Sidebar>
     );
   }

@@ -15,11 +15,20 @@ class MobileMenu extends Component {
         fixed="top"
         id="mobile-menu"
       >
-      <Menu.Item as="a" id="menu-item" content="Upload" onClick={()=>this.uploadPage("upload")}>
+      <Menu.Item as="a" id="menu-item-mobile" content="Upload" onClick={()=>this.uploadPage("upload")}>
         <Icon name='cloud upload' id="menu-icon" size="large"/>
       </Menu.Item>
-      <Menu.Item as="a" id="menu-item" content="Music" onClick={()=>this.uploadPage("songs")}>
+      <Menu.Item as="a" id="menu-item-mobile" content="Music" onClick={()=>this.uploadPage("songs")}>
         <Icon name='music' id="menu-icon" size="large"/>
+      </Menu.Item>
+      <Menu.Item as="a" id="menu-item-mobile" content="Music" onClick={()=>this.uploadPage("playlists")}>
+        <Icon name='list' id="menu-icon" size="large"/>
+      </Menu.Item>
+      <Menu.Item as="a" id="menu-item-mobile" content="Music" onClick={()=>this.uploadPage("audiobooks")}>
+        <Icon name='book' id="menu-icon" size="large"/>
+      </Menu.Item>
+      <Menu.Item as="a" id="menu-item-mobile" content="Music" onClick={()=>this.uploadPage("account")}>
+        <Icon name='user' id="menu-icon" size="large"/>
       </Menu.Item>
       </Menu>
     );

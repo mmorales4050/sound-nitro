@@ -13,6 +13,15 @@ span {
   text-align: left;
 }
 
+#menu-item.filler-item {
+  height: calc(100% - 292.56px);
+}
+
+#menu-item.account-item {
+  height: ;
+}
+
+
 #menu-icon {
   float: left;
 }
@@ -20,4 +29,6 @@ span {
 #side-menu {
   width: 230px;
   z-index: 0;
+  height: calc(100% - 90px)!important;
+
 }
