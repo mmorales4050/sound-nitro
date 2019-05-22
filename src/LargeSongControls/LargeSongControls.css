@@ -5,19 +5,23 @@
   justify-content: space-between;
 }
 
+#bottom-menu .item{
+}
+
 #bottom-menu .progress {
   background-color: #404040;
 }
 
 #bottom-menu .bar {
   background-color: #b3b3b3;
+  min-width: 0%;
 }
 
 #bottom-menu .volume-controls {
   display:flex;
   align-items: center;
   justify-content: flex-end;
-  width: 250px;
+  width: 30%;
   color: #b3b3b3;
 }
 #bottom-menu .volume-controls .progress{
@@ -69,7 +73,7 @@
 }
 
 #now-playing {
-  width: 250px;
+  width: 30%;
 }
 
 #now-playing img {

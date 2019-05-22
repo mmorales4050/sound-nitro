@@ -4,16 +4,18 @@ import './LargeSongControls.css'
 import {connect} from 'react-redux'
 
 class LargeSongControls extends Component {
-  state = {song_time: 0}
+  state = {time: 0}
+
   componentDidMount() {
-    this.interval = setInterval(() => this.setState({ song_time: this.state.song_time + 1}), 1000);
+    this.interval = setInterval(() => {
+      this.setState({ time: this.state.time + 1})
+    }, 200)
   }
   componentWillUnmount() {
     clearInterval(this.interval);
   }
   toggleAudio = () => {
     if (this.props.current_track != null){
-      console.log(this.props.current_track.howl)
       this.props.dispatch({type: "TOGGLE_AUDIO"})
     }
   }
@@ -48,8 +50,8 @@ class LargeSongControls extends Component {
       <Icon name="sync"/>
       </div>
       <div className="song-progress">
-      <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.state.song_time))}</div>
-      <Progress percent={30} size='tiny'/>
+      <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.props.current_track.howl.seek()))}</div>
+      <Progress percent={this.props.track_duration === 0 ? 0 : (this.props.current_track.howl.seek() / this.props.track_duration)*100} size='tiny'/>
       <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.props.track_duration))}</div>
       </div>
       </Menu.Item>
