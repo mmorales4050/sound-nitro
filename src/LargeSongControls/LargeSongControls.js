@@ -35,7 +35,7 @@ class LargeSongControls extends Component {
         id="bottom-menu"
       >
       <Menu.Item id="now-playing">
-      <Image src="https://i.pinimg.com/originals/3a/f0/e5/3af0e55ea66ea69e35145fb108b4a636.jpg"/>
+      <Image src="http://www.baronblaze.com/wp-content/uploads/2015/12/music-placeholder.png"/>
       <div className="song-info">
       <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.info.song.name}</div>
       <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.info.song.artist}</div>
@@ -58,7 +58,7 @@ class LargeSongControls extends Component {
       <Menu.Item className="volume-controls">
       <Icon name="list" size="" className="current-playlist"/>
       <Icon name="volume up" size=""/>
-      <Progress percent={80} size='tiny'/>
+      <Progress percent={100} size='tiny'/>
       </Menu.Item >
       </Menu>
     );

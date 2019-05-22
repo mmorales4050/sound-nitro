@@ -8,14 +8,19 @@ import MobileMenu from '../MobileMenu/MobileMenu'
 import MainView from '../MainView/MainView'
 import { isMobileOnly } from 'react-device-detect'
 import {connect} from 'react-redux'
-
+import '../api'
 
 class App extends Component {
 
   componentDidMount() {
-    fetch("http://localhost:3000/songs")
+    fetch(URL + "songs")
     .then(response => response.json())
     .then((response) => this.props.dispatch({type: "SET_SONGS", payload: response}))
+    .then(()=>{
+      fetch(URL + "playlists")
+      .then(response => response.json())
+      .then((response) => this.props.dispatch({type: "SET_PLAYLISTS", payload: response}))
+    })
   }
 
   render() {

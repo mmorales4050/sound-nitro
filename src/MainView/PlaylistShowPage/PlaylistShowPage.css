@@ -1,0 +1,42 @@
+.top-container #album-info div{
+  color: rgba(0,0,0,0.0);
+}
+
+.top-container {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #7a7a7a;
+  margin-left: 20px;
+  margin-right: 20px!important;
+}
+
+.top-container #album-card{
+  padding-top: 20px;
+
+}
+
+.top-container .playlist-info{
+  padding-left: 40px;
+
+}
+
+.top-container .title {
+  padding-top: 30px;
+  font-size: 28px;
+  color: white;
+  font-weight: bold;
+}
+
+.top-container .song-number {
+  padding-top: 20px;
+  font-size: 14px;
+  color: #B3B3B7;
+}
+
+.top-container .playlist-info button {
+  margin-top: 130px!important;
+  width: 130px;
+  height: 39px;
+  background-color: #fe7903!important;
+  color: white!important;
+}

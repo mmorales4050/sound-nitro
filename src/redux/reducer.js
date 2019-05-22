@@ -2,6 +2,7 @@
 let initialState = {
   files: [],
   playlists: [],
+  displayPlaylist: null,
   songs: [],
   current_track: null,
   playing: false,
@@ -10,6 +11,10 @@ let initialState = {
 }
 const rootReducer = (oldState=initialState, action) => {
   switch(action.type){
+    case "DISPLAY_PLAYLIST":
+      return {...oldState, displayPlaylist: action.payload}
+    case "SET_PLAYLISTS":
+      return {...oldState, playlists: action.payload}
     case "SET_DURATION":
       return {...oldState, track_duration: oldState.current_track.howl.duration()}
     case "TOGGLE_AUDIO":

@@ -5,6 +5,7 @@ import SongsPage from './SongsPage/SongsPage'
 import PlaylistPage from './PlaylistPage/PlaylistPage'
 import './MainView.css'
 import {connect} from 'react-redux'
+import PlaylistShowPage from './PlaylistShowPage/PlaylistShowPage'
 
 
 class MainView extends Component {
@@ -17,6 +18,8 @@ class MainView extends Component {
         return <UploadPage />
       case "playlists":
         return <PlaylistPage />
+      case "playlist":
+        return <PlaylistShowPage />
       default:
         return null
     }
