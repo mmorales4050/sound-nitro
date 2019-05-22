@@ -3,10 +3,40 @@
 }
 
 #song-menu-item {
-  width: 100%;
+  width: 95%;
+
+}
+
+#song-menu-item #music-note-icon{
+
+}
+
+#song-menu-item #music-menu-item-header .icon{
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+#song-menu-item #music-menu-item-header{
+  display:flex;
+  justify-content: space-between;
+  height:20px;
+}
+#song-menu-item #music-menu-item-header .begin-menu{
+  display:flex;
+}
+
+#song-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+
 }
 
 #song-duration {
   float:right;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+#song-options{
+  float: right;
+  padding-right: 30px;
 }

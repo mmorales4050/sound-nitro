@@ -6,7 +6,7 @@ let initialState = {
   songs: [],
   current_track: null,
   playing: false,
-  page: "playlists",
+  page: "songs",
   track_duration: 0
 }
 const rootReducer = (oldState=initialState, action) => {
