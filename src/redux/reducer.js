@@ -7,10 +7,13 @@ let initialState = {
   current_track: null,
   playing: false,
   page: "songs",
-  track_duration: 0
+  track_duration: 0,
+  selectedSong: null
 }
 const rootReducer = (oldState=initialState, action) => {
   switch(action.type){
+    case "SELECT_SONG":
+      return {...oldState, selectedSong: action.payload}
     case "DISPLAY_PLAYLIST":
       return {...oldState, displayPlaylist: action.payload}
     case "SET_PLAYLISTS":

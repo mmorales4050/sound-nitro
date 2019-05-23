@@ -13,10 +13,11 @@ class SongMenuItem extends Component {
 
   openMenu = (event) => {
     this.setState({menuOpen: !this.state.menuOpen})
+    this.props.dispatch({type: "SELECT_SONG", payload: this.props.song})
   }
 
   songPaused = (event) => {
-    this.props.dispatch({type: "TOGGLE_AUDIO"})
+    this.props.dispatch({type: "TOGGLE_AUDIO", payload: this.props.song})
   }
 
   songClicked = (event) => {
