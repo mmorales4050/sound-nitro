@@ -7,6 +7,14 @@
 
 }
 
+#song-menu-item.music-menu-item-playing #music-menu-item-header{
+  color: #fe7903;
+}
+#song-menu-item.music-menu-item-playing{
+  background-color: rgba(0, 0, 0, 0.4);
+
+}
+
 #song-menu-item #music-note-icon{
 
 }
@@ -39,4 +47,8 @@
 #song-options{
   float: right;
   padding-right: 30px;
+  color: white!important;
+}
+#song-options:hover{
+  font-size: 18px;
 }

@@ -1,0 +1,51 @@
+#popup-menu {
+  background-color: #272727;
+  margin-right: 60px;
+  height: 700%;
+  width: 150px;
+  margin-top: -5px;
+  z-index:100;
+}
+
+
+
+#new-playlist-modal.add-playlist {
+  height: 100%;
+  overflow: scroll;
+}
+
+#new-playlist-modal.add-playlist button{
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+#new-playlist-modal.add-playlist .content{
+  height: 100%;
+  background-color:rgba(0,0,0,0.0);
+}
+
+
+#new-playlist-modal.add-playlist .header{
+  font-size: 72px;
+}
+
+#new-playlist-modal.add-playlist .header .icon{
+  font-size: 48px;
+}
+
+#popup-menu-container {
+  float: right;
+  height: 16px;
+  min-height: 16px;
+  margin-right: 10px;
+
+}
+
+#popup-menu .item{
+  color: #b3b3b3;
+}
+
+#popup-menu .item:hover{
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+}

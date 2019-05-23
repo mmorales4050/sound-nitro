@@ -1,3 +1,7 @@
+.playlist-card-container {
+  padding: 30px;
+}
+
 .playlist-button {
   padding-top: 30px;
   display: flex;

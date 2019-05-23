@@ -7,6 +7,7 @@
 
 .place-holder {
   height: 250px;
+  min-height: 250px;
   width: 250px;
   background-color: #272727;
   display:flex;
