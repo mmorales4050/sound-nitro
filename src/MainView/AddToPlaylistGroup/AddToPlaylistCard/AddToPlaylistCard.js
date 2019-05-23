@@ -11,9 +11,14 @@ class AddToPlaylistCard extends Component {
   }
 
   addToPlaylist = () => {
-    console.log(this.props.playlist.id)
-    console.log(this.props.selectedSong.song.id)
-    fetch(URL + "/playlist_songs")
+    fetch(URL + "/playlist_songs", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        playlistId: this.props.playlist.id,
+        songId: this.props.selectedSong.song.id
+      })
+    })
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PlaylistCard from '../PlaylistCard/PlaylistCard'
-import SongsPage from '../SongsPage/SongsPage'
+import PlaylistSongs from './PlaylistSongs/PlaylistSongs';
 import {Button } from 'semantic-ui-react'
 import './PlaylistShowPage.css'
 import {connect} from 'react-redux'
@@ -18,13 +18,13 @@ class PlaylistShow extends Component {
       {this.props.displayPlaylist.name}
       </div>
       <div className="song-number">
-      13 SONGS
+      {this.props.displayPlaylist.songs.length} SONGS
       </div>
       <Button circular content="PLAY"/>
       </div>
       </div>
       <div className="playlist-song-container">
-      <SongsPage />
+      <PlaylistSongs songs={this.props.displayPlaylist.songs}/>
       </div>
 
       </>

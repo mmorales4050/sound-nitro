@@ -2,6 +2,7 @@
 let initialState = {
   files: [],
   playlists: [],
+  queue: null,
   displayPlaylist: null,
   songs: [],
   current_track: null,
