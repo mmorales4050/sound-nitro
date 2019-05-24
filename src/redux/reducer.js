@@ -11,6 +11,11 @@ let initialState = {
   track_duration: 0,
   selectedSong: null
 }
+
+const filesReducer = (state=[], action) => {
+
+}
+
 const rootReducer = (oldState=initialState, action) => {
   switch(action.type){
     case "SELECT_SONG":
@@ -41,6 +46,8 @@ const rootReducer = (oldState=initialState, action) => {
         try{oldState.current_track.howl.pause()}catch(e){}
         action.payload.howl.play()
         return {...oldState, current_track: action.payload, playing: true}
+      case "SET_QUEUE":
+        return {...oldState, queue: action.payload}
     default:
       return oldState
   }

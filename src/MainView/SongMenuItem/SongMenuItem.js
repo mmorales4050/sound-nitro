@@ -21,12 +21,12 @@ class SongMenuItem extends Component {
   }
 
   songClicked = (event) => {
-    this.props.dispatch({type: "SET_AND_PLAY_CURRENT_TRACK", payload: {howl: new Howl({
-      src: [this.props.song.audio],
+    this.props.dispatch({type: "SET_AND_PLAY_CURRENT_TRACK", payload: {...this.props.song, howl: new Howl({
+      src: [this.props.song.url],
       onload: () => {
         this.props.dispatch({type: "SET_DURATION"})
       }
-    }), info: this.props.song}
+    })}
   })
   }
 
@@ -35,13 +35,13 @@ class SongMenuItem extends Component {
 
     return (
       <>
-      <Menu.Item as="a" id="song-menu-item" className={this.props.current_track ? (this.props.song.audio === this.props.current_track.info.audio ? "music-menu-item-playing" : "") : ""} onMouseEnter={()=>this.setState({hover:true})} onMouseLeave={()=>this.setState({hover:false})}>
+      <Menu.Item as="a" id="song-menu-item" className={this.props.current_track ? (this.props.song.url === this.props.current_track.url ? "music-menu-item-playing" : "") : ""} onMouseEnter={()=>this.setState({hover:true})} onMouseLeave={()=>this.setState({hover:false})}>
       <List horizontal inverted>
 
       <List.Item>
   <List.Content>
     <List.Header><div id="music-menu-item-header" className=""><div className="begin-menu"><div className="icon">
-    {this.props.playing ? (this.props.song.audio === this.props.current_track.info.audio ? <List.Icon name={"pause"} size='' onClick={this.songPaused}/> : this.state.hover ?
+    {this.props.playing ? (this.props.song.url === this.props.current_track.url ? <List.Icon name={"pause"} size='' onClick={this.songPaused}/> : this.state.hover ?
       <List.Icon name='play' size='' onClick={this.songClicked}/>
       :
        <Image src="music_note.png" id="music-note-icon"/>
@@ -49,10 +49,10 @@ class SongMenuItem extends Component {
       <List.Icon name='play' size='' onClick={this.songClicked}/>
       :
       (
-        this.props.current_track ? (this.props.song.audio === this.props.current_track.info.audio ? <List.Icon name='play' size='' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
+        this.props.current_track ? (this.props.song.url === this.props.current_track.url ? <List.Icon name='play' size='' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
       )}
-    </div>{this.props.song.song.name}</div><div><span id="song-duration">4:20</span>{this.state.hover ?<Icon name="ellipsis horizontal" id="song-options" onClick={this.openMenu}/>:null}</div></div></List.Header>
-    <List.Description  id = "item-description">{this.props.song.song.artist}{this.state.menuOpen ? <PopupMenu /> : null}</List.Description>
+    </div>{this.props.song.name}</div><div><span id="song-duration">4:20</span>{this.state.hover ?<Icon name="ellipsis horizontal" id="song-options" onClick={this.openMenu}/>:null}</div></div></List.Header>
+    <List.Description  id = "item-description">{this.props.song.artist}{this.state.menuOpen ? <PopupMenu /> : null}</List.Description>
   </List.Content>
 </List.Item>
       </List>

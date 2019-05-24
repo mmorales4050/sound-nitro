@@ -37,8 +37,8 @@ class LargeSongControls extends Component {
       <Menu.Item id="now-playing">
       <Image src="http://www.baronblaze.com/wp-content/uploads/2015/12/music-placeholder.png"/>
       <div className="song-info">
-      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.info.song.name}</div>
-      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.info.song.artist}</div>
+      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.name}</div>
+      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.artist}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="song-controls-item">

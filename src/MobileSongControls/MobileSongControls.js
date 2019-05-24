@@ -15,8 +15,8 @@ class MobileSongControls extends Component {
       <Menu.Item>
       <Image src="https://i.pinimg.com/originals/3a/f0/e5/3af0e55ea66ea69e35145fb108b4a636.jpg"/>
       <div className="song-info">
-      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.info.song.name}</div>
-      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.info.song.artist}</div>
+      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.name}</div>
+      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.artist}</div>
       </div>
       </Menu.Item>
       <Menu.Item>

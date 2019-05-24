@@ -16,7 +16,7 @@ class AddToPlaylistCard extends Component {
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
         playlistId: this.props.playlist.id,
-        songId: this.props.selectedSong.song.id
+        songId: this.props.selectedSong.id
       })
     })
   }
