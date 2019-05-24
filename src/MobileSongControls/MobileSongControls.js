@@ -15,8 +15,8 @@ class MobileSongControls extends Component {
       <Menu.Item>
       <Image src="https://i.pinimg.com/originals/3a/f0/e5/3af0e55ea66ea69e35145fb108b4a636.jpg"/>
       <div className="song-info">
-      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.name}</div>
-      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.artist}</div>
+      <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>
+      <div className="song-artist">{this.props.currentTrack === null ? "" : this.props.currentTrack.artist}</div>
       </div>
       </Menu.Item>
       <Menu.Item>
@@ -30,9 +30,8 @@ class MobileSongControls extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  current_track: store.current_track,
-  playing: store.playing,
-  track_duration: store.track_duration
+  currentTrack: store.currentTrack,
+  playing: store.playing
 })
 
 export default connect(mapStateToProps)(MobileSongControls);

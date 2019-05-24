@@ -11,7 +11,7 @@ const Player = class {
 }
 
 const mapStateToProps = (store) => ({
-  current_track: store.current_track,
+  currentTrack: store.currentTrack,
   playing: store.playing,
   queue: store.queue,
   songs: store.songs

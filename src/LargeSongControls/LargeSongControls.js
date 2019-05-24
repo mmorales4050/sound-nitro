@@ -15,7 +15,7 @@ class LargeSongControls extends Component {
     clearInterval(this.interval);
   }
   toggleAudio = () => {
-    if (this.props.current_track != null){
+    if (this.props.currentTrack != null){
       this.props.dispatch({type: "TOGGLE_AUDIO"})
     }
   }
@@ -37,8 +37,8 @@ class LargeSongControls extends Component {
       <Menu.Item id="now-playing">
       <Image src="http://www.baronblaze.com/wp-content/uploads/2015/12/music-placeholder.png"/>
       <div className="song-info">
-      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.name}</div>
-      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.artist}</div>
+      <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>
+      <div className="song-artist">{this.props.currentTrack === null ? "" : this.props.currentTrack.artist}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="song-controls-item">
@@ -50,9 +50,9 @@ class LargeSongControls extends Component {
       <Icon name="sync"/>
       </div>
       <div className="song-progress">
-      <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.props.current_track.howl.seek()))}</div>
-      <Progress percent={this.props.track_duration === 0 ? 0 : (this.props.current_track.howl.seek() / this.props.track_duration)*100} size='tiny'/>
-      <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.props.track_duration))}</div>
+      <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(Math.round(this.props.currentTrack.howl.seek()))}</div>
+      <Progress percent={!this.props.loaded ? 0 : (this.props.currentTrack.howl.seek() / this.props.currentTrack.howl.duration())*100} size='tiny'/>
+      <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(Math.round(this.props.currentTrack.howl.duration()))}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="volume-controls">
@@ -67,9 +67,9 @@ class LargeSongControls extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  current_track: store.current_track,
+  currentTrack: store.currentTrack,
   playing: store.playing,
-  track_duration: store.track_duration
+  loaded: store.loaded
 })
 
 export default connect(mapStateToProps)(LargeSongControls);

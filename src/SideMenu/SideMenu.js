@@ -6,7 +6,7 @@ import  {connect} from 'react-redux';
 class SideMenu extends Component {
 
   uploadPage = (page) => {
-    this.props.dispatch({type: "CHANGE_PAGE", payload: page})
+    this.props.dispatch({type: "SET_PAGE", payload: page})
   }
 
   render() {

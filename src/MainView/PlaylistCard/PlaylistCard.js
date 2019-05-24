@@ -10,9 +10,9 @@ class PlaylistCard extends Component {
   }
 
   gotoPlaylist = () => {
-    this.props.dispatch({type: "DISPLAY_PLAYLIST", payload: this.props.playlist})
+    this.props.dispatch({type: "SET_DISPLAYPLAYLIST", payload: this.props.playlist})
     this.props.dispatch({
-      type: "CHANGE_PAGE", payload: "playlist"
+      type: "SET_PAGE", payload: "playlist"
     })
   }
 

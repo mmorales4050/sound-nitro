@@ -13,7 +13,7 @@ class UploadPage extends Component {
 
   fileChange = (event) => {
     this.setState({toggleSubmit: ""})
-    this.props.dispatch({type: "CHOOSE_FILES_TO_UPLOAD", payload: event.target.files})
+    this.props.dispatch({type: "SET_FILES", payload: event.target.files})
   }
 
   renderSongInputs = () => {
@@ -31,7 +31,8 @@ class UploadPage extends Component {
     for (let i = 0; i < songInfoList.length; i++) {
       var songTitle = songInfoList[i].childNodes[0].childNodes[1].firstElementChild.lastElementChild.firstElementChild.value
       var songArtist = songInfoList[i].childNodes[0].childNodes[2].firstElementChild.lastElementChild.firstElementChild.value
-      songs.push({title: songTitle, artist: songArtist})
+      var songIndex = i
+      songs.push({title: songTitle, artist: songArtist, index: songIndex})
     }
 
     var files = event.target.childNodes[1].files
@@ -44,6 +45,7 @@ class UploadPage extends Component {
       formData.append("title" + i, song.title)
       formData.append("artist" + i, song.artist)
       formData.append("file" + i, song.file)
+      formData.append("index" + i, song.index)
     })
 
     fetch("http://localhost:3000/songs", {
@@ -51,7 +53,7 @@ class UploadPage extends Component {
     	body: formData
     }).then(()=>this.setState({loading: false}))
     this.setState({loading: true, toggleSubmit: "disabled"})
-    this.props.dispatch({type: "CLEAR_FILES_TO_UPLOAD"})
+    this.props.dispatch({type: "DELETE_FILES"})
   }
 
   render() {
