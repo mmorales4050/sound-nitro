@@ -41,15 +41,15 @@ class SongMenuItem extends Component {
       <List.Item>
   <List.Content>
     <List.Header><div id="music-menu-item-header" className=""><div className="begin-menu"><div className="icon">
-    {this.props.playing ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name={"pause"} size='' onClick={this.songPaused}/> : this.state.hover ?
-      <List.Icon name='play' size='' onClick={this.songClicked}/>
+    {this.props.playing ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name={"pause"} onClick={this.songPaused}/> : this.state.hover ?
+      <List.Icon name='play' onClick={this.songClicked}/>
       :
        <Image src="music_note.png" id="music-note-icon"/>
      ) : this.state.hover ?
-      <List.Icon name='play' size='' onClick={this.songClicked}/>
+      <List.Icon name='play' onClick={this.songClicked}/>
       :
       (
-        this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' size='' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
+        this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
       )}
     </div>{this.props.song.name}</div><div><span id="song-duration">4:20</span>{this.state.hover ?<Icon name="ellipsis horizontal" id="song-options" onClick={this.openMenu}/>:null}</div></div></List.Header>
     <List.Description  id = "item-description">{this.props.song.artist}{this.state.menuOpen ? <PopupMenu /> : null}</List.Description>

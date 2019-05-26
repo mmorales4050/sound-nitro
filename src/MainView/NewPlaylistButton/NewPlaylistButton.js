@@ -40,7 +40,7 @@ class NewPlaylistButton extends Component {
   render() {
     return (
       <>
-      <div class="playlist-button">
+      <div className="playlist-button">
       <Button circular id="new-playlist-button" size="large" onClick={this.openModal}>
       New Playlist
       </Button>

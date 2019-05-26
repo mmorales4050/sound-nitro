@@ -19,19 +19,27 @@ class UploadPage extends Component {
   renderSongInputs = () => {
     var songInputs = []
     for (var i = 0; i < this.props.files.length; i++){
-      songInputs.push(<SongInputField song={this.props.files[i]}/>)
+      songInputs.push(<SongInputField song={this.props.files[i]} key={i}/>)
     }
     return songInputs
   }
 
   uploadFiles = (event) => {
     // You can use event.target.elements to get the data from each form element
+    var startingIndex
+    if(this.props.songs.length < 1){
+      startingIndex = 0
+    }else{
+      startingIndex = this.props.songs[this.props.songs.length - 1].index + 1
+    }
+
     var songInfoList = event.target.childNodes[2].childNodes
     var songs = []
     for (let i = 0; i < songInfoList.length; i++) {
       var songTitle = songInfoList[i].childNodes[0].childNodes[1].firstElementChild.lastElementChild.firstElementChild.value
       var songArtist = songInfoList[i].childNodes[0].childNodes[2].firstElementChild.lastElementChild.firstElementChild.value
-      var songIndex = i
+      var songIndex = startingIndex
+      startingIndex += 1
       songs.push({title: songTitle, artist: songArtist, index: songIndex})
     }
 
@@ -51,7 +59,16 @@ class UploadPage extends Component {
     fetch("http://localhost:3000/songs", {
     	method: "POST",
     	body: formData
-    }).then(()=>this.setState({loading: false}))
+    })
+    .then((response)=>response.json())
+    .then((response)=>{
+      console.log(response)
+      this.props.dispatch({
+        type: "ADD_SONGS",
+        payload: response
+      })
+    })
+    .then(()=>this.setState({loading: false}))
     this.setState({loading: true, toggleSubmit: "disabled"})
     this.props.dispatch({type: "DELETE_FILES"})
   }
@@ -97,7 +114,8 @@ class UploadPage extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  files: store.files
+  files: store.files,
+  songs: store.songs
 })
 
 

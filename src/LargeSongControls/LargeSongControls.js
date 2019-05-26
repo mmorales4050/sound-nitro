@@ -56,8 +56,8 @@ class LargeSongControls extends Component {
       </div>
       </Menu.Item>
       <Menu.Item className="volume-controls">
-      <Icon name="list" size="" className="current-playlist"/>
-      <Icon name="volume up" size=""/>
+      <Icon name="list" className="current-playlist"/>
+      <Icon name="volume up" />
       <Progress percent={100} size='tiny'/>
       </Menu.Item >
       </Menu>
