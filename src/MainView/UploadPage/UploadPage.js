@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Howl} from 'howler'
 import { Button, Icon, Form, Segment, Input, List, Dimmer, Loader} from 'semantic-ui-react'
 import './UploadPage.css'
 import SongInputField from '../SongInputField/SongInputField'
@@ -63,9 +64,28 @@ class UploadPage extends Component {
     .then((response)=>response.json())
     .then((response)=>{
       console.log(response)
-      this.props.dispatch({
-        type: "ADD_SONGS",
-        payload: response
+      // Add duration to songs
+      response.forEach(song => {
+        var howl = new Howl({
+          src: song.url,
+          onload: () => {
+            var formData = new FormData()
+            formData.append("duration", howl.duration())
+            fetch("http://localhost:3000/songs/" + song.id, {
+            	method: "PATCH",
+              header: {"Content-Type":"application/json"},
+            	body: formData
+            })
+            .then(response => response.json())
+            .then(response => {
+              this.props.dispatch({
+                type: "ADD_SONGS",
+                payload: response
+              })
+              console.log(response + "added to state")
+            })
+          }
+        })
       })
     })
     .then(()=>this.setState({loading: false}))

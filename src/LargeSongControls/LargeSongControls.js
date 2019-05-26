@@ -21,6 +21,7 @@ class LargeSongControls extends Component {
   }
 
   formatTime = (secs) => {
+    secs = Math.round(secs)
     var minutes = Math.floor(secs / 60) || 0;
     var seconds = (secs - minutes * 60) || 0;
 
@@ -52,7 +53,7 @@ class LargeSongControls extends Component {
       <div className="song-progress">
       <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(Math.round(this.props.currentTrack.howl.seek()))}</div>
       <Progress percent={!this.props.loaded ? 0 : (this.props.currentTrack.howl.seek() / this.props.currentTrack.howl.duration())*100} size='tiny'/>
-      <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(Math.round(this.props.currentTrack.howl.duration()))}</div>
+      <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(this.props.currentTrack.howl.duration())}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="volume-controls">

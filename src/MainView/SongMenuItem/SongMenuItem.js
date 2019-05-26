@@ -11,6 +11,14 @@ class SongMenuItem extends Component {
     menuOpen: false
   }
 
+  formatTime = (secs) => {
+    secs = Math.round(secs)
+    var minutes = Math.floor(secs / 60) || 0;
+    var seconds = (secs - minutes * 60) || 0;
+
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+  }
+
   openMenu = (event) => {
     this.setState({menuOpen: !this.state.menuOpen})
     this.props.dispatch({type: "SET_SONG", payload: this.props.song})
@@ -51,7 +59,7 @@ class SongMenuItem extends Component {
       (
         this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
       )}
-    </div>{this.props.song.name}</div><div><span id="song-duration">4:20</span>{this.state.hover ?<Icon name="ellipsis horizontal" id="song-options" onClick={this.openMenu}/>:null}</div></div></List.Header>
+    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<Icon name="ellipsis horizontal" id="song-options" onClick={this.openMenu}/>:null}</div></div></List.Header>
     <List.Description  id = "item-description">{this.props.song.artist}{this.state.menuOpen ? <PopupMenu /> : null}</List.Description>
   </List.Content>
 </List.Item>
