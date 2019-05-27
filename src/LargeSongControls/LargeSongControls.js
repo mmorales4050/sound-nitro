@@ -6,7 +6,11 @@ import {Howl} from 'howler'
 import ActionCreators from '../redux/ActionCreators'
 
 class LargeSongControls extends Component {
-  state = {time: 0}
+  state = {
+    time: 0,
+    shuffled: false
+
+  }
 
   componentDidMount() {
     this.interval = setInterval(() => {
@@ -66,6 +70,20 @@ class LargeSongControls extends Component {
     }
   }
 
+  shuffle = () => {
+    if (!this.state.shuffled) {
+      this.setState({shuffled: true})
+      var shuffledQueue = [...[...this.props.queue].sort(() => Math.random() - 0.5)]
+      shuffledQueue.splice(shuffledQueue.indexOf(this.props.currentTrack), 1)
+      this.props.dispatch({type: "SET_QUEUE", payload: [this.props.currentTrack, ...shuffledQueue]})
+      this.props.dispatch({type: "SET_INDEX", payload: 0})
+    }else {
+      this.setState({shuffled: false})
+      this.props.dispatch({type: "SET_QUEUE", payload: this.props.originalQueue})
+      this.props.dispatch({type: "SET_INDEX", payload: this.props.originalQueue.indexOf(this.props.currentTrack)})
+    }
+  }
+
   formatTime = (secs) => {
     secs = Math.round(secs)
     var minutes = Math.floor(secs / 60) || 0;
@@ -90,7 +108,7 @@ class LargeSongControls extends Component {
       </Menu.Item>
       <Menu.Item className="song-controls-item">
       <div className="song-controls">
-      <Icon name="shuffle"/>
+      <Icon name="shuffle" onClick={this.shuffle} className={`shuffled${this.state.shuffled}`}/>
       <Icon name="step backward" onClick={this.back}/>
       <Icon name={this.props.playing ? "pause circle outline" : "play circle outline"} id="play-button" onClick={this.toggleAudio}/>
       <Icon name="step forward" onClick={this.skip}/>
@@ -118,7 +136,8 @@ const mapStateToProps = (store) => ({
   playing: store.playing,
   queue: store.queue,
   index: store.index,
-  howl: store.howl
+  howl: store.howl,
+  originalQueue: store.originalQueue
 
 
 })

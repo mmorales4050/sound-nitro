@@ -21,8 +21,12 @@ class NewPlaylistButton extends Component {
       body: JSON.stringify({
         name: this.state.playlist_name
       })
-    }).then(()=>this.setState({playlist_name: ""}))
-    this.setState({open: false})
+    }).then((response)=>response.json())
+    .then((response)=> {
+      this.props.dispatch({type: "ADD_PLAYLISTS", payload: response})
+      this.setState({playlist_name: ""})
+      this.setState({open: false})
+    })
   }
 
   openModal = () => {

@@ -1,6 +1,6 @@
 #bottom-menu {
   height: 90px;
-  background-color: 
+  background-color:
 
 #272727!important;
   display:flex;
@@ -42,6 +42,14 @@
 #bottom-menu .current-playlist {
   padding-right: 30px;
 }
+
+#bottom-menu .shuffledtrue {
+  color: #fe7903;
+}
+#bottom-menu .icon.shuffledtrue:hover {
+  color: #FFA500;
+}
+
 
 .song-controls-item {
   width: 40%;
