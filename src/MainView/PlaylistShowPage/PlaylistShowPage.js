@@ -46,7 +46,7 @@ class PlaylistShow extends Component {
 
   render() {
     return (
-      <>
+      <div id="playlist-show-container">
       <div className="top-container">
       <PlaylistCard playlist={this.props.displayPlaylist}/>
 
@@ -63,8 +63,10 @@ class PlaylistShow extends Component {
       <div className="playlist-song-container">
       <PlaylistSongs songs={this.props.displayPlaylist.songs}/>
       </div>
+      <div id ="filler-item">
+      </div>
 
-      </>
+      </div>
     );
   }
 

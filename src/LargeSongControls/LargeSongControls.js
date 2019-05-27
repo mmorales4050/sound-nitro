@@ -3,7 +3,6 @@ import { Menu, Image, Icon, Progress} from 'semantic-ui-react'
 import './LargeSongControls.css'
 import {connect} from 'react-redux'
 import {Howl} from 'howler'
-import ActionCreators from '../redux/ActionCreators'
 
 class LargeSongControls extends Component {
   state = {
@@ -43,7 +42,7 @@ class LargeSongControls extends Component {
   }
 
   toggleAudio = () => {
-    if (this.props.howl === null){
+    if (this.props.howl === null && this.queue !== null){
       this.play(0)
     }else{
       if (this.props.playing) {

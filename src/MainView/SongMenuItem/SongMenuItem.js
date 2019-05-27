@@ -11,6 +11,27 @@ class SongMenuItem extends Component {
     menuOpen: false
   }
 
+  play = (index) => {
+      var howl = new Howl({
+            src: this.props.queue[index].url,
+            onplay: () => {
+              this.props.dispatch({type: "SET_INDEX", payload: index})
+              this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
+              this.props.dispatch({type: "SET_PLAYING", payload: true})
+            },
+            onend: () => {
+              this.play(this.props.index + 1)
+              this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+            },
+            onpause: () => {
+              this.props.dispatch({type: "SET_PLAYING", payload: false})
+            }
+          })
+      this.props.dispatch({type: "SET_HOWL", payload: howl
+    })
+    howl.play()
+  }
+
   formatTime = (secs) => {
     secs = Math.round(secs)
     var minutes = Math.floor(secs / 60) || 0;
@@ -24,18 +45,14 @@ class SongMenuItem extends Component {
     this.props.dispatch({type: "SET_SELECTEDSONG", payload: this.props.song})
   }
 
-  songPaused = (event) => {
-    this.props.dispatch({type: "TOGGLE_AUDIO", payload: this.props.song})
-  }
-
-  songClicked = (event) => {
-    this.props.dispatch({type: "SET_CURRENTTRACK", payload: {...this.props.song, howl: new Howl({
-      src: [this.props.song.url],
-      onload: () => {
-        this.props.dispatch({type: "SET_LOADED", payload: true})
+  toggleAudio = () => {
+    if (this.props.howl !== null){
+      if (this.props.playing) {
+        this.props.howl.pause()
+      }else {
+        this.props.howl.play()
       }
-    })}
-  })
+    }
   }
 
   //<List.Icon name='play' size='large' onClick={this.songClicked}/>
@@ -49,12 +66,12 @@ class SongMenuItem extends Component {
       <List.Item>
   <List.Content>
     <List.Header><div id="music-menu-item-header" className=""><div className="begin-menu"><div className="icon">
-    {this.props.playing ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name={"pause"} onClick={this.songPaused}/> : this.state.hover ?
-      <List.Icon name='play' onClick={this.songClicked}/>
+    {this.props.playing ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name={"pause"} onClick={this.toggleAudio}/> : this.state.hover ?
+      <List.Icon name='play' onClick={this.toggleAudio}/>
       :
        <Image src="music_note.png" id="music-note-icon"/>
      ) : this.state.hover ?
-      <List.Icon name='play' onClick={this.songClicked}/>
+      <List.Icon name='play' onClick={this.toggleAudio}/>
       :
       (
         this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
@@ -73,7 +90,8 @@ class SongMenuItem extends Component {
 
 const mapStateToProps = (store) => ({
   currentTrack: store.currentTrack,
-  playing: store.playing
+  playing: store.playing,
+  howl: store.howl
 })
 
 export default connect(mapStateToProps)(SongMenuItem);
