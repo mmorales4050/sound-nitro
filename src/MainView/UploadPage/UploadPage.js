@@ -49,48 +49,51 @@ class UploadPage extends Component {
       songs[i].file = files[i]
     }
 
-    var formData = new FormData()
-    songs.forEach((song, i) => {
-      formData.append("title" + i, song.title)
-      formData.append("artist" + i, song.artist)
-      formData.append("file" + i, song.file)
-      formData.append("index" + i, song.index)
-    })
 
-    fetch("http://localhost:3000/songs", {
-    	method: "POST",
-    	body: formData
-    })
-    .then((response)=>response.json())
-    .then((response)=>{
-      console.log(response)
-      // Add duration to songs
-      response.forEach(song => {
-        var howl = new Howl({
-          src: song.url,
-          onload: () => {
-            var formData = new FormData()
-            formData.append("duration", howl.duration())
-            fetch("http://localhost:3000/songs/" + song.id, {
-            	method: "PATCH",
-              header: {"Content-Type":"application/json"},
-            	body: formData
-            })
-            .then(response => response.json())
-            .then(response => {
-              this.props.dispatch({
-                type: "ADD_SONGS",
-                payload: response
-              })
-              console.log(response + "added to state")
-            })
-          }
-        })
+    songs.forEach((song, i) => {
+      var formData = new FormData()
+      formData.append("title", song.title)
+      formData.append("artist", song.artist)
+      formData.append("file", song.file)
+      formData.append("index", song.index)
+      fetch("http://localhost:3000/songs", {
+      	method: "POST",
+      	body: formData
       })
+      .then((response)=>response.json())
+      .then((response)=>{
+          console.log(response)
+        // Add duration to songs
+          var howl = new Howl({
+            src: response.url,
+            onload: () => {
+              var formData = new FormData()
+              formData.append("duration", howl.duration())
+              fetch("http://localhost:3000/songs/" + response.id, {
+              	method: "PATCH",
+                header: {"Content-Type":"application/json"},
+              	body: formData
+              })
+              .then(response => response.json())
+              .then(response => {
+                this.props.dispatch({
+                  type: "ADD_SONGS",
+                  payload: response
+                })
+                console.log(response + "added to state")
+              })
+              .then(()=>{
+                if(i === songs.length - 1){
+                  this.setState({loading: false})
+                  this.props.dispatch({type: "DELETE_FILES"})
+                }
+              })
+            }
+          })
+      })
+
     })
-    .then(()=>this.setState({loading: false}))
     this.setState({loading: true, toggleSubmit: "disabled"})
-    this.props.dispatch({type: "DELETE_FILES"})
   }
 
   render() {
