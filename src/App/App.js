@@ -9,6 +9,8 @@ import MainView from '../MainView/MainView'
 import { isMobileOnly } from 'react-device-detect'
 import {connect} from 'react-redux'
 import '../api'
+import {Howl} from 'howler'
+
 
 class App extends Component {
 
@@ -19,7 +21,9 @@ class App extends Component {
     .then(()=>{
       fetch(URL + "playlists")
       .then(response => response.json())
-      .then((response) => this.props.dispatch({type: "SET_PLAYLISTS", payload: response}))
+      .then((response) => {
+         this.props.dispatch({type: "SET_QUEUE", payload: this.props.songs})
+      })
     })
   }
 
@@ -45,7 +49,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  songs: store.songs
+  songs: store.songs,
+  index: store.index
 })
 
 export default connect(mapStateToProps)(App);

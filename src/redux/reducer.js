@@ -10,7 +10,9 @@ let initialState = {
   playing: false,
   page: "songs",
   loaded: false,
-  selectedSong: null
+  selectedSong: null,
+  index: 0,
+  howl: null
 }
 
 function oldReducer(state=initialState, action){
@@ -42,7 +44,9 @@ const rootReducer = combineReducers({
   playing: playingReducer,
   page: pageReducer,
   loaded: loadedReducer,
-  selectedSong: selectedSongReducer
+  selectedSong: selectedSongReducer,
+  index: indexReducer,
+  howl: howlReducer
 })
 
 export default rootReducer
@@ -65,9 +69,25 @@ function playlistsReducer(state=[], action){
       return state
     }
 }
+function howlReducer(state=null, action){
+  switch(action.type){
+    case "SET_HOWL":
+      return action.payload
+    default:
+      return state
+    }
+}
 function queueReducer(state=null, action){
   switch(action.type){
     case "SET_QUEUE":
+      return action.payload
+    default:
+      return state
+    }
+}
+function indexReducer(state=null, action){
+  switch(action.type){
+    case "SET_INDEX":
       return action.payload
     default:
       return state

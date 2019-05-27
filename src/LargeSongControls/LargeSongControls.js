@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Menu, Image, Icon, Progress} from 'semantic-ui-react'
 import './LargeSongControls.css'
 import {connect} from 'react-redux'
+import {Howl} from 'howler'
+import ActionCreators from '../redux/ActionCreators'
 
 class LargeSongControls extends Component {
   state = {time: 0}
@@ -14,9 +16,53 @@ class LargeSongControls extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
+  play = (index) => {
+      var howl = new Howl({
+            src: this.props.queue[index].url,
+            onplay: () => {
+              this.props.dispatch({type: "SET_INDEX", payload: index})
+              this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
+              this.props.dispatch({type: "SET_PLAYING", payload: true})
+            },
+            onend: () => {
+              this.play(this.props.index + 1)
+              this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+            },
+            onpause: () => {
+              this.props.dispatch({type: "SET_PLAYING", payload: false})
+            }
+          })
+      this.props.dispatch({type: "SET_HOWL", payload: howl
+    })
+    howl.play()
+  }
+
   toggleAudio = () => {
-    if (this.props.currentTrack != null){
-      this.props.dispatch({type: "TOGGLE_AUDIO"})
+    if (this.props.howl === null){
+      this.play(0)
+    }else{
+      if (this.props.playing) {
+        this.props.howl.pause()
+      }else {
+        this.props.howl.play()
+      }
+    }
+  }
+
+  skip = () => {
+    if (this.props.queue != null){
+      this.props.howl.stop()
+      this.play(this.props.index + 1)
+      this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+    }
+  }
+
+  back = () => {
+    if (this.props.queue != null){
+      this.props.howl.stop()
+      this.play(this.props.index - 1)
+      this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
     }
   }
 
@@ -45,15 +91,15 @@ class LargeSongControls extends Component {
       <Menu.Item className="song-controls-item">
       <div className="song-controls">
       <Icon name="shuffle"/>
-      <Icon name="step backward"/>
+      <Icon name="step backward" onClick={this.back}/>
       <Icon name={this.props.playing ? "pause circle outline" : "play circle outline"} id="play-button" onClick={this.toggleAudio}/>
-      <Icon name="step forward"/>
+      <Icon name="step forward" onClick={this.skip}/>
       <Icon name="sync"/>
       </div>
       <div className="song-progress">
-      <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(Math.round(this.props.currentTrack.howl.seek()))}</div>
-      <Progress percent={!this.props.loaded ? 0 : (this.props.currentTrack.howl.seek() / this.props.currentTrack.howl.duration())*100} size='tiny'/>
-      <div className="time-stamp">{!this.props.loaded ? "0:00" : this.formatTime(this.props.currentTrack.howl.duration())}</div>
+      <div className="time-stamp">{!this.props.howl ? "0:00" : this.formatTime(Math.round(this.props.howl.seek()))}</div>
+      <Progress percent={!this.props.howl ? 0 : (this.props.howl.seek() / this.props.howl.duration())*100} size='tiny'/>
+      <div className="time-stamp">{!this.props.currentTrack ? "0:00" : this.formatTime(this.props.currentTrack.duration)}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="volume-controls">
@@ -70,7 +116,11 @@ class LargeSongControls extends Component {
 const mapStateToProps = (store) => ({
   currentTrack: store.currentTrack,
   playing: store.playing,
-  loaded: store.loaded
+  queue: store.queue,
+  index: store.index,
+  howl: store.howl
+
+
 })
 
 export default connect(mapStateToProps)(LargeSongControls);
