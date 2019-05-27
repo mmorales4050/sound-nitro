@@ -19,6 +19,12 @@ class AddToPlaylistCard extends Component {
         songId: this.props.selectedSong.id
       })
     })
+    .then(response=>response.json())
+    .then(response=>{
+      var newPlaylists = [...this.props.playlists]
+      newPlaylists[newPlaylists.indexOf(this.props.playlist)] = response
+      this.props.dispatch({type: "SET_PLAYLISTS", payload: newPlaylists})
+    })
   }
 
   render() {
@@ -39,7 +45,8 @@ class AddToPlaylistCard extends Component {
 
 const mapStateToProps = (store) => ({
   displayPlaylist: store.displayPlaylist,
-  selectedSong: store.selectedSong
+  selectedSong: store.selectedSong,
+  playlists: store.playlists
 })
 
 export default connect(mapStateToProps)(AddToPlaylistCard);
