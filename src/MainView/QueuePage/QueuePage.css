@@ -1,0 +1,31 @@
+.play-queue-container #filler-item{
+  height: 90px;
+  min-height: 90px;
+
+}
+.play-queue-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 50px;
+}
+
+.play-queue-container .play-queue-top-container {
+  display: flex!important;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
+  height: 80px;
+  min-height: 80px;
+  border-bottom: 1px solid #7a7a7a;
+  padding-left: 30px;
+  font-size: 50px;
+  color: white;
+  font-weight: bold;
+
+}
+
+.play-queue-container .play-queue-bottom-container {
+  flex: 1;
+}

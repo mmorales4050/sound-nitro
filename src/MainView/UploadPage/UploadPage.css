@@ -2,6 +2,39 @@
   height: 100%;
 }
 
+.upload-page .header {
+  color: white!important;
+}
+
+.upload-page .input {
+  height: 60px;
+  width: 100%;
+  border: 1px solid #7a7a7a;
+  background-color: inherit;
+}
+.upload-page .ui.input input{
+  background-color: transparent!important;
+  color: white!important;
+}
+
+.upload-page .item {
+  width: 30%;
+}
+
+.upload-page .horizontal.list {
+  display:flex;
+  justify-content: space-around;
+}
+
+.upload-page .label {
+  height: 60px;
+  width: 100%;
+  min-width: 100%;
+
+  background-color: #262626;
+  color: #7a7a7a;;
+}
+
 .form {
   display: flex;
     flex-direction: column;

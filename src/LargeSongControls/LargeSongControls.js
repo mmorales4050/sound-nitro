@@ -28,9 +28,11 @@ class LargeSongControls extends Component {
               this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
               this.props.dispatch({type: "SET_PLAYING", payload: true})
             },
+            onload: () => {
+              this.props.howl.play()
+            },
             onend: () => {
-              this.play(this.props.index + 1)
-              this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+              this.skip()
             },
             onpause: () => {
               this.props.dispatch({type: "SET_PLAYING", payload: false})
@@ -38,7 +40,6 @@ class LargeSongControls extends Component {
           })
       this.props.dispatch({type: "SET_HOWL", payload: howl
     })
-    howl.play()
   }
 
   toggleAudio = () => {
@@ -58,6 +59,7 @@ class LargeSongControls extends Component {
       this.props.howl.stop()
       this.play(this.props.index + 1)
       this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.index})
     }
   }
 
@@ -120,7 +122,9 @@ class LargeSongControls extends Component {
       </div>
       </Menu.Item>
       <Menu.Item className="volume-controls">
-      <Icon name="list" className="current-playlist"/>
+      <Icon name="list" className="current-playlist" onClick={()=> {
+        this.props.dispatch({type: "SET_PAGE", payload: "queue"})
+      }}/>
       <Icon name="volume up" />
       <Progress percent={100} size='tiny'/>
       </Menu.Item >

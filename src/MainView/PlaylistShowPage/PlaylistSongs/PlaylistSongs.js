@@ -11,7 +11,7 @@ class PlaylistSongs extends Component {
 
       {this.props.songs.map(song => {
           return (
-            <SongMenuItem song={song} />
+            <SongMenuItem song={song} key={song.id}/>
           )
         })
       }
