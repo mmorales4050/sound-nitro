@@ -9,7 +9,6 @@ import MainView from '../MainView/MainView'
 import { isMobileOnly } from 'react-device-detect'
 import {connect} from 'react-redux'
 import '../api'
-import {Howl} from 'howler'
 
 
 class App extends Component {

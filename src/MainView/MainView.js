@@ -6,6 +6,7 @@ import PlaylistPage from './PlaylistPage/PlaylistPage'
 import './MainView.css'
 import QueuePage from './QueuePage/QueuePage'
 import {connect} from 'react-redux'
+import HomePage from './HomePage/HomePage'
 import PlaylistShowPage from './PlaylistShowPage/PlaylistShowPage'
 
 
@@ -23,6 +24,8 @@ class MainView extends Component {
         return <PlaylistShowPage />
       case "queue":
         return <QueuePage />
+      case "home":
+        return <HomePage />
       default:
         return null
     }

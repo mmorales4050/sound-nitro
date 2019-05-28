@@ -1,0 +1,25 @@
+.home-page .tag-line {
+  color: white;
+  font-size: 60px;
+  padding-top: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+.home-page .images {
+  display: flex;
+  justify-content: column;
+}
+
+.home-page .image1 img{
+  width: 100%;
+  
+}
+
+.home-page .image2 {
+  background-image:
+}
+
+.home-page .image3 {
+  background-image:
+}

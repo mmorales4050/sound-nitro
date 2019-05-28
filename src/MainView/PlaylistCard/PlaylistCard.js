@@ -17,14 +17,14 @@ class PlaylistCard extends Component {
   }
 
   playPlaylist = () => {
-
+    
   }
 
   render() {
     return (
       <Card id="album-card">
-      <div className="place-holder" onMouseEnter={()=>this.setState({icon:"play circle outline"})} onMouseLeave={()=>this.setState({icon:"music"})} onClick={this.playPlaylist}>
-      <Icon name={this.state.icon} size="huge" inverted/>
+      <div className="place-holder" onClick={this.gotoPlaylist}>
+      <Icon name={this.state.icon} size="huge" inverted onMouseEnter={()=>this.setState({icon:"play circle outline"})} onMouseLeave={()=>this.setState({icon:"music"})} onClick={this.playPlaylist}/>
 
       </div>
     <Card.Content id="album-info">

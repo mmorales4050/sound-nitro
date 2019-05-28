@@ -24,8 +24,6 @@ class LargeSongControls extends Component {
       var howl = new Howl({
             src: this.props.queue[index].url,
             onplay: () => {
-              this.props.dispatch({type: "SET_INDEX", payload: index})
-              this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
               this.props.dispatch({type: "SET_PLAYING", payload: true})
             },
             onload: () => {
@@ -38,14 +36,16 @@ class LargeSongControls extends Component {
               this.props.dispatch({type: "SET_PLAYING", payload: false})
             }
           })
+      this.props.dispatch({type: "SET_INDEX", payload: index})
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
       this.props.dispatch({type: "SET_HOWL", payload: howl
     })
   }
 
   toggleAudio = () => {
-    if (this.props.howl === null && this.queue !== null){
+    if (this.props.howl === null && this.props.loading === false){
       this.play(0)
-    }else{
+    }else if(this.props.loading === false && this.props.howl !== null){
       if (this.props.playing) {
         this.props.howl.pause()
       }else {
@@ -64,7 +64,7 @@ class LargeSongControls extends Component {
   }
 
   back = () => {
-    if (this.props.queue != null){
+    if (this.props.queue !== null && this.props.index !== 0){
       this.props.howl.stop()
       this.play(this.props.index - 1)
       this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
@@ -72,16 +72,23 @@ class LargeSongControls extends Component {
   }
 
   shuffle = () => {
-    if (!this.state.shuffled) {
-      this.setState({shuffled: true})
-      var shuffledQueue = [...[...this.props.queue].sort(() => Math.random() - 0.5)]
-      shuffledQueue.splice(shuffledQueue.indexOf(this.props.currentTrack), 1)
-      this.props.dispatch({type: "SET_QUEUE", payload: [this.props.currentTrack, ...shuffledQueue]})
-      this.props.dispatch({type: "SET_INDEX", payload: 0})
-    }else {
-      this.setState({shuffled: false})
-      this.props.dispatch({type: "SET_QUEUE", payload: this.props.originalQueue})
-      this.props.dispatch({type: "SET_INDEX", payload: this.props.originalQueue.indexOf(this.props.currentTrack)})
+    if (this.props.loading === false){
+      if (!this.state.shuffled) {
+        this.setState({shuffled: true})
+        this.props.dispatch({type: "SET_SHUFFLE", payload: true})
+        var shuffledQueue = [...[...this.props.queue].sort(() => Math.random() - 0.5)]
+        this.props.dispatch({type: "SET_QUEUE", payload: [...shuffledQueue]})
+        if (this.props.currentTrack !== null){
+          shuffledQueue.splice(shuffledQueue.indexOf(this.props.currentTrack), 1)
+          this.props.dispatch({type: "SET_QUEUE", payload: [this.props.currentTrack, ...shuffledQueue]})
+        }
+        this.props.dispatch({type: "SET_INDEX", payload: 0})
+      }else {
+        this.setState({shuffled: false})
+        this.props.dispatch({type: "SET_SHUFFLE", payload: false})
+        this.props.dispatch({type: "SET_QUEUE", payload: this.props.originalQueue})
+        this.props.dispatch({type: "SET_INDEX", payload: this.props.originalQueue.indexOf(this.props.currentTrack)})
+      }
     }
   }
 
@@ -101,7 +108,9 @@ class LargeSongControls extends Component {
         id="bottom-menu"
       >
       <Menu.Item id="now-playing">
-      <Image src="http://www.baronblaze.com/wp-content/uploads/2015/12/music-placeholder.png"/>
+      <div className="place-holder-image">
+      <Icon name="music" size="large"/>
+      </div>
       <div className="song-info">
       <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>
       <div className="song-artist">{this.props.currentTrack === null ? "" : this.props.currentTrack.artist}</div>
@@ -125,8 +134,10 @@ class LargeSongControls extends Component {
       <Icon name="list" className="current-playlist" onClick={()=> {
         this.props.dispatch({type: "SET_PAGE", payload: "queue"})
       }}/>
+      <div className="temp-hide">
       <Icon name="volume up" />
       <Progress percent={100} size='tiny'/>
+      </div>
       </Menu.Item >
       </Menu>
     );
@@ -140,7 +151,9 @@ const mapStateToProps = (store) => ({
   queue: store.queue,
   index: store.index,
   howl: store.howl,
-  originalQueue: store.originalQueue
+  originalQueue: store.originalQueue,
+  loading: store.loading,
+  shuffle: store.shuffle
 
 
 })

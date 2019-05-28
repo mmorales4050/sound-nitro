@@ -9,31 +9,14 @@ let initialState = {
   currentTrack: null,
   playing: false,
   page: "songs",
-  loaded: false,
+  loading: false,
   selectedSong: null,
   index: 0,
   howl: null,
-  originalQueue: null
+  originalQueue: null,
+  shuffle: false
 }
 
-function oldReducer(state=initialState, action){
-  switch(action.type){
-    case "TOGGLE_AUDIO":
-      if (state.playing){
-        state.currentTrack.howl.pause()
-      }else{
-        state.currentTrack.howl.play()
-      }
-      return {...state, playing: !state.playing}
-      case "SET_AND_PLAY_currentTrack":
-        // Pause song if there is currently one playing
-        try{state.currentTrack.howl.pause()}catch(e){}
-        action.payload.howl.play()
-        return {...state, currentTrack: action.payload, playing: true}
-    default:
-      return state
-  }
-}
 
 const rootReducer = combineReducers({
   files: filesReducer,
@@ -48,7 +31,8 @@ const rootReducer = combineReducers({
   selectedSong: selectedSongReducer,
   index: indexReducer,
   howl: howlReducer,
-  originalQueue: originalQueueReducer
+  originalQueue: originalQueueReducer,
+  shuffle: shuffleReducer
 })
 
 export default rootReducer
@@ -139,7 +123,7 @@ function playingReducer(state=false, action){
       return state
     }
 }
-function pageReducer(state="songs", action){
+function pageReducer(state="playlists", action){
   switch(action.type){
     case "SET_PAGE":
       return action.payload
@@ -150,6 +134,14 @@ function pageReducer(state="songs", action){
 function loadingReducer(state=false, action){
   switch(action.type){
     case "SET_LOADING":
+      return action.payload
+    default:
+      return state
+    }
+}
+function shuffleReducer(state=false, action){
+  switch(action.type){
+    case "SET_SHUFFLE":
       return action.payload
     default:
       return state

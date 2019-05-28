@@ -86,9 +86,31 @@
   width: 30%;
 }
 
-#now-playing img {
+.sync.icon {
+  color: #272727!important;
+}
+
+.temp-hide {
+  color: #272727!important;
+  background-color: #272727!important;
+}
+.temp-hide:hover {
+  color: #272727!important;
+  background-color: #272727!important;
+}
+
+.temp-hide .bar {
+  color: #272727!important;
+  background-color: #272727!important;
+}
+
+#now-playing .place-holder-image{
+  border: solid #b3b3b3 1px;
   width: 60px;
   height: 60px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #now-playing .song-info {
