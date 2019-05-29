@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 
 let initialState = {
   files: [],
@@ -5,52 +6,171 @@ let initialState = {
   queue: null,
   displayPlaylist: null,
   songs: [],
-  current_track: null,
+  currentTrack: null,
   playing: false,
   page: "songs",
-  track_duration: 0,
-  selectedSong: null
+  loading: false,
+  selectedSong: null,
+  index: 0,
+  howl: null,
+  originalQueue: null,
+  shuffle: false,
+  currentPlaylist: null
 }
 
-const filesReducer = (state=[], action) => {
 
-}
-
-const rootReducer = (oldState=initialState, action) => {
-  switch(action.type){
-    case "SELECT_SONG":
-      return {...oldState, selectedSong: action.payload}
-    case "DISPLAY_PLAYLIST":
-      return {...oldState, displayPlaylist: action.payload}
-    case "SET_PLAYLISTS":
-      return {...oldState, playlists: action.payload}
-    case "SET_DURATION":
-      return {...oldState, track_duration: oldState.current_track.howl.duration()}
-    case "TOGGLE_AUDIO":
-      if (oldState.playing){
-        oldState.current_track.howl.pause()
-      }else{
-        oldState.current_track.howl.play()
-      }
-      return {...oldState, playing: !oldState.playing}
-    case "CHANGE_PAGE":
-      return {...oldState, page: action.payload}
-    case "CHOOSE_FILES_TO_UPLOAD":
-      return {...oldState, files: action.payload}
-    case "CLEAR_FILES_TO_UPLOAD":
-      return {...oldState, files: []}
-    case "SET_SONGS":
-      return {...oldState, songs: action.payload}
-      case "SET_AND_PLAY_CURRENT_TRACK":
-        // Pause song if there is currently one playing
-        try{oldState.current_track.howl.pause()}catch(e){}
-        action.payload.howl.play()
-        return {...oldState, current_track: action.payload, playing: true}
-      case "SET_QUEUE":
-        return {...oldState, queue: action.payload}
-    default:
-      return oldState
-  }
-}
+const rootReducer = combineReducers({
+  files: filesReducer,
+  playlists: playlistsReducer,
+  queue: queueReducer,
+  displayPlaylist: displayPlaylistReducer,
+  songs: songsReducer,
+  currentTrack: currentTrackReducer,
+  playing: playingReducer,
+  page: pageReducer,
+  loading: loadingReducer,
+  selectedSong: selectedSongReducer,
+  index: indexReducer,
+  howl: howlReducer,
+  originalQueue: originalQueueReducer,
+  shuffle: shuffleReducer,
+  currentPlaylist: currentPlaylistReducer,
+  addToPlaylistOpen: addToPlaylistOpenReducer
+})
 
 export default rootReducer
+
+function filesReducer(state=[], action) {
+  switch(action.type){
+    case "SET_FILES":
+      return action.payload
+    case "DELETE_FILES":
+      return []
+    default:
+      return state
+    }
+}
+function addToPlaylistOpenReducer(state=null, action) {
+  switch(action.type){
+    case "SET_ADDTOPLAYLIST":
+      return action.payload
+    default:
+      return state
+    }
+}
+function originalQueueReducer(state=null, action) {
+  switch(action.type){
+    case "SET_ORIGNALQUEUE":
+      return action.payload
+    default:
+      return state
+    }
+}
+function playlistsReducer(state=[], action){
+  switch(action.type){
+    case "SET_PLAYLISTS":
+      return action.payload
+    case "ADD_PLAYLISTS":
+      return state.concat(action.payload)
+    default:
+      return state
+    }
+}
+function howlReducer(state=null, action){
+  switch(action.type){
+    case "SET_HOWL":
+      return action.payload
+    default:
+      return state
+    }
+}
+function queueReducer(state=null, action){
+  switch(action.type){
+    case "SET_QUEUE":
+      return action.payload
+    default:
+      return state
+    }
+}
+function indexReducer(state=null, action){
+  switch(action.type){
+    case "SET_INDEX":
+      return action.payload
+    default:
+      return state
+    }
+}
+function displayPlaylistReducer(state=null, action){
+  switch(action.type){
+    case "SET_DISPLAYPLAYLIST":
+      return action.payload
+    default:
+      return state
+    }
+}
+function songsReducer(state=[], action){
+  switch(action.type){
+    case "SET_SONGS":
+      return action.payload
+    case "ADD_SONGS":
+      return state.concat(action.payload)
+    default:
+      return state
+    }
+}
+function currentTrackReducer(state=null, action){
+  switch(action.type){
+    case "SET_CURRENTTRACK":
+      return action.payload
+    default:
+      return state
+    }
+}
+function playingReducer(state=false, action){
+  switch(action.type){
+    case "SET_PLAYING":
+      return action.payload
+    default:
+      return state
+    }
+}
+function pageReducer(state="playlists", action){
+  switch(action.type){
+    case "SET_PAGE":
+      return action.payload
+    default:
+      return state
+    }
+}
+function loadingReducer(state=false, action){
+  switch(action.type){
+    case "SET_LOADING":
+      return action.payload
+    default:
+      return state
+    }
+}
+function shuffleReducer(state=false, action){
+  switch(action.type){
+    case "SET_SHUFFLE":
+      return action.payload
+    default:
+      return state
+    }
+}
+function selectedSongReducer(state=null, action){
+  switch(action.type){
+    case "SET_SELECTEDSONG":
+      return action.payload
+    default:
+      return state
+    }
+}
+function currentPlaylistReducer(state=null, action){
+  switch(action.type){
+    case "SET_CURRENTPLAYLIST":
+      return action.payload
+    default:
+      return state
+    }
+}

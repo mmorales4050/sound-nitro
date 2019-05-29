@@ -9,14 +9,22 @@
   height: 250px;
   min-height: 250px;
   width: 250px;
-  background-color: 
+  background-size: 250px 250px;
+  /* background-color:
 
 #272727;
   display:flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 
 }
+
+.place-holder img{
+  height: 250px;
+  min-height: 250px;
+  width: 250px;
+}
+
 
 #album-info{
   background-color:rgba(0,0,0,0.0);

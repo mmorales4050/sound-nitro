@@ -10,6 +10,7 @@ import { isMobileOnly } from 'react-device-detect'
 import {connect} from 'react-redux'
 import '../api'
 
+
 class App extends Component {
 
   componentDidMount() {
@@ -19,8 +20,14 @@ class App extends Component {
     .then(()=>{
       fetch(URL + "playlists")
       .then(response => response.json())
-      .then((response) => this.props.dispatch({type: "SET_PLAYLISTS", payload: response}))
+      .then((response) => {
+         this.props.dispatch({type: "SET_QUEUE", payload: this.props.songs})
+         this.props.dispatch({type: "SET_ORIGNALQUEUE", payload: this.props.songs})
+         this.props.dispatch({type: "SET_PLAYLISTS", payload: response})
+         this.props.dispatch({type: "SET_LOADING", payload: false})
+      })
     })
+    this.props.dispatch({type: "SET_LOADING", payload: true})
   }
 
   render() {
@@ -45,7 +52,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  songs: store.songs
+  songs: store.songs,
+  index: store.index,
+  loading: store.loading
 })
 
 export default connect(mapStateToProps)(App);

@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { Menu, Image, Icon, Progress} from 'semantic-ui-react'
 import './LargeSongControls.css'
 import {connect} from 'react-redux'
+import {Howl} from 'howler'
 
 class LargeSongControls extends Component {
-  state = {time: 0}
+  state = {
+    time: 0,
+    shuffled: false
+
+  }
 
   componentDidMount() {
     this.interval = setInterval(() => {
@@ -14,13 +19,81 @@ class LargeSongControls extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
+  play = (index) => {
+      var howl = new Howl({
+            src: this.props.queue[index].url,
+            onplay: () => {
+              this.props.dispatch({type: "SET_PLAYING", payload: true})
+            },
+            onload: () => {
+              this.props.howl.play()
+            },
+            onend: () => {
+              this.skip()
+            },
+            onpause: () => {
+              this.props.dispatch({type: "SET_PLAYING", payload: false})
+            }
+          })
+      this.props.dispatch({type: "SET_INDEX", payload: index})
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
+      this.props.dispatch({type: "SET_HOWL", payload: howl
+    })
+  }
+
   toggleAudio = () => {
-    if (this.props.current_track != null){
-      this.props.dispatch({type: "TOGGLE_AUDIO"})
+    if (this.props.howl === null && this.props.loading === false){
+      this.play(0)
+    }else if(this.props.loading === false && this.props.howl !== null){
+      if (this.props.playing) {
+        this.props.howl.pause()
+      }else {
+        this.props.howl.play()
+      }
+    }
+  }
+
+  skip = () => {
+    if (this.props.queue != null && this.props.index + 1 < this.props.queue.length){
+      this.props.howl.stop()
+      this.play(this.props.index + 1)
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
+      this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+    }
+  }
+
+  back = () => {
+    if (this.props.queue !== null && this.props.index !== 0){
+      this.props.howl.stop()
+      this.play(this.props.index - 1)
+      this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
+    }
+  }
+
+  shuffle = () => {
+    if (this.props.loading === false){
+      if (!this.state.shuffled) {
+        this.setState({shuffled: true})
+        this.props.dispatch({type: "SET_SHUFFLE", payload: true})
+        var shuffledQueue = [...[...this.props.queue].sort(() => Math.random() - 0.5)]
+        this.props.dispatch({type: "SET_QUEUE", payload: [...shuffledQueue]})
+        if (this.props.currentTrack !== null){
+          shuffledQueue.splice(shuffledQueue.indexOf(this.props.currentTrack), 1)
+          this.props.dispatch({type: "SET_QUEUE", payload: [this.props.currentTrack, ...shuffledQueue]})
+        }
+        this.props.dispatch({type: "SET_INDEX", payload: 0})
+      }else {
+        this.setState({shuffled: false})
+        this.props.dispatch({type: "SET_SHUFFLE", payload: false})
+        this.props.dispatch({type: "SET_QUEUE", payload: this.props.originalQueue})
+        this.props.dispatch({type: "SET_INDEX", payload: this.props.originalQueue.indexOf(this.props.currentTrack)})
+      }
     }
   }
 
   formatTime = (secs) => {
+    secs = Math.round(secs)
     var minutes = Math.floor(secs / 60) || 0;
     var seconds = (secs - minutes * 60) || 0;
 
@@ -35,30 +108,37 @@ class LargeSongControls extends Component {
         id="bottom-menu"
       >
       <Menu.Item id="now-playing">
-      <Image src="http://www.baronblaze.com/wp-content/uploads/2015/12/music-placeholder.png"/>
+      <div className="place-holder-image">
+      {this.props.currentTrack !== null ? <img src={this.props.currentTrack.image} alt=""/> : null}
+
+      </div>
       <div className="song-info">
-      <div className="song-name">{this.props.current_track === null ? "" : this.props.current_track.name}</div>
-      <div className="song-artist">{this.props.current_track === null ? "" : this.props.current_track.artist}</div>
+      <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>
+      <div className="song-artist">{this.props.currentTrack === null ? "" : this.props.currentTrack.artist}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="song-controls-item">
       <div className="song-controls">
-      <Icon name="shuffle"/>
-      <Icon name="step backward"/>
+      <Icon name="shuffle" onClick={this.shuffle} className={`shuffled${this.state.shuffled}`}/>
+      <Icon name="step backward" onClick={this.back}/>
       <Icon name={this.props.playing ? "pause circle outline" : "play circle outline"} id="play-button" onClick={this.toggleAudio}/>
-      <Icon name="step forward"/>
+      <Icon name="step forward" onClick={this.skip}/>
       <Icon name="sync"/>
       </div>
       <div className="song-progress">
-      <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.props.current_track.howl.seek()))}</div>
-      <Progress percent={this.props.track_duration === 0 ? 0 : (this.props.current_track.howl.seek() / this.props.track_duration)*100} size='tiny'/>
-      <div className="time-stamp">{this.props.track_duration === 0 ? "0:00" : this.formatTime(Math.round(this.props.track_duration))}</div>
+      <div className="time-stamp">{!this.props.howl ? "0:00" : this.formatTime(Math.round(this.props.howl.seek()))}</div>
+      <Progress percent={!this.props.howl ? 0 : (this.props.howl.seek() / this.props.howl.duration())*100} size='tiny'/>
+      <div className="time-stamp">{!this.props.currentTrack ? "0:00" : this.formatTime(this.props.currentTrack.duration)}</div>
       </div>
       </Menu.Item>
       <Menu.Item className="volume-controls">
-      <Icon name="list" size="" className="current-playlist"/>
-      <Icon name="volume up" size=""/>
+      <Icon name="list" className="current-playlist" onClick={()=> {
+        this.props.dispatch({type: "SET_PAGE", payload: "queue"})
+      }}/>
+      <div className="temp-hide">
+      <Icon name="volume up" />
       <Progress percent={100} size='tiny'/>
+      </div>
       </Menu.Item >
       </Menu>
     );
@@ -67,9 +147,14 @@ class LargeSongControls extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  current_track: store.current_track,
+  currentTrack: store.currentTrack,
   playing: store.playing,
-  track_duration: store.track_duration
+  queue: store.queue,
+  index: store.index,
+  howl: store.howl,
+  originalQueue: store.originalQueue,
+  loading: store.loading,
+  shuffle: store.shuffle
 })
 
 export default connect(mapStateToProps)(LargeSongControls);

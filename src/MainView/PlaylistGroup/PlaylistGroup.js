@@ -13,7 +13,7 @@ class PlaylistGroup extends Component {
       >
       {this.props.playlists.map(playlist=> {
         return (
-          <PlaylistCard playlist={playlist}/>
+          <PlaylistCard playlist={playlist} key={playlist.id}/>
         )
       })}
       </Card.Group>

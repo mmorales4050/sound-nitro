@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
-import  {connect} from 'react-redux';
 import PlaylistSongs from '../PlaylistShowPage/PlaylistSongs/PlaylistSongs'
-import './SongsPage.css'
-
-
-class SongsPage extends Component {
+import './QueuePage.css'
+import {connect} from 'react-redux'
+class QueuePage extends Component {
 
   render() {
     return (
       <div className="play-queue-container">
-      <div className="play-queue-top-container">Songs</div>
+      <div className="play-queue-top-container">Play Queue</div>
       <div className="play-queue-bottom-container">
-      <PlaylistSongs songs={this.props.songs}/>
+      <PlaylistSongs songs={this.props.queue}/>
       </div>
       <div id="filler-item">
       </div>
       </div>
     );
   }
+
 }
 
 const mapStateToProps = (store) => ({
-  songs: store.songs
+  queue: store.queue
 })
 
-export default connect(mapStateToProps)(SongsPage);
+export default connect(mapStateToProps)(QueuePage);
