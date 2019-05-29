@@ -39,6 +39,7 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+let bool = true;
 
 function filesReducer(state=[], action) {
   switch(action.type){
@@ -103,7 +104,7 @@ function indexReducer(state=null, action){
 function displayPlaylistReducer(state=null, action){
   switch(action.type){
     case "SET_DISPLAYPLAYLIST":
-      return action.payload
+      return { bool: !bool, ...action.payload}
     default:
       return state
     }

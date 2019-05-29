@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Card, Transition, Icon} from 'semantic-ui-react'
 import './PlaylistCard.css'
 import  {connect} from 'react-redux';
-import {Howl} from 'howler'
 import {playPlaylist, gotoPlaylistPage} from "../../redux/actionCreators"
 
 
@@ -26,28 +25,6 @@ class PlaylistCard extends Component {
     }else{
       return "play circle outline"
     }
-  }
-
-  play = (index, queue=this.props.queue) => {
-      var howl = new Howl({
-            src: queue[index].url,
-            onplay: () => {
-              this.props.dispatch({type: "SET_PLAYING", payload: true})
-            },
-            onload: () => {
-              this.props.howl.play()
-            },
-            onend: () => {
-              this.skip()
-            },
-            onpause: () => {
-              this.props.dispatch({type: "SET_PLAYING", payload: false})
-            }
-          })
-      this.props.dispatch({type: "SET_INDEX", payload: index})
-      this.props.dispatch({type: "SET_CURRENTTRACK", payload: queue[index]})
-      this.props.dispatch({type: "SET_HOWL", payload: howl
-    })
   }
 
   gotoPlaylist = async () => {
