@@ -109,7 +109,8 @@ class LargeSongControls extends Component {
       >
       <Menu.Item id="now-playing">
       <div className="place-holder-image">
-      <Icon name={this.props.playing ? "volume up" : "volume off"} size="large"/>
+      {this.props.currentTrack !== null ? <img src={this.props.currentTrack.image} alt=""/> : null}
+      
       </div>
       <div className="song-info">
       <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>
@@ -154,8 +155,6 @@ const mapStateToProps = (store) => ({
   originalQueue: store.originalQueue,
   loading: store.loading,
   shuffle: store.shuffle
-
-
 })
 
 export default connect(mapStateToProps)(LargeSongControls);

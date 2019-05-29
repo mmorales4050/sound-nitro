@@ -60,7 +60,7 @@ class PlaylistCard extends Component {
   render() {
     return (
       <Card id="album-card">
-      <div className="place-holder" onClick={this.gotoPlaylist}>
+      <div className="place-holder" style={{backgroundImage: `url(${this.props.playlist.image})`}} onClick={this.gotoPlaylist}>
       <Icon name={this.icon()} size="huge" inverted onMouseEnter={()=>this.setState({icon:"play circle outline"})} onMouseLeave={()=>this.setState({icon:"music"})} onClick={this.playPlaylist}/>
 
       </div>
