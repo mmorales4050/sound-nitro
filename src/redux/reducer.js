@@ -14,7 +14,8 @@ let initialState = {
   index: 0,
   howl: null,
   originalQueue: null,
-  shuffle: false
+  shuffle: false,
+  currentPlaylist: null
 }
 
 
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   index: indexReducer,
   howl: howlReducer,
   originalQueue: originalQueueReducer,
-  shuffle: shuffleReducer
+  shuffle: shuffleReducer,
+  currentPlaylist: currentPlaylistReducer
 })
 
 export default rootReducer
@@ -150,6 +152,14 @@ function shuffleReducer(state=false, action){
 function selectedSongReducer(state=null, action){
   switch(action.type){
     case "SET_SELECTEDSONG":
+      return action.payload
+    default:
+      return state
+    }
+}
+function currentPlaylistReducer(state=null, action){
+  switch(action.type){
+    case "SET_CURRENTPLAYLIST":
       return action.payload
     default:
       return state

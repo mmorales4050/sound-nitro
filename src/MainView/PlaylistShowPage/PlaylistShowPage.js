@@ -10,38 +10,37 @@ import {Howl} from 'howler'
 class PlaylistShow extends Component {
 
   playClicked = () => {
-    if (this.props.queue.songs !== this.props.displayPlaylist.songs){
+    if (this.props.howl === null && this.props.loading === false){
       this.play(0)
-    }else{
-      if(this.props.playing){
+    }else if(this.props.loading === false && this.props.howl !== null){
+      if (this.props.playing) {
         this.props.howl.pause()
-      }else{
+      }else {
         this.props.howl.play()
       }
     }
   }
 
   play = (index) => {
-      this.props.dispatch({type: "SET_QUEUE", payload: this.props.displayPlaylist.songs})
-      this.props.dispatch({type: "SET_INDEX", payload: 0})
       var howl = new Howl({
             src: this.props.queue[index].url,
             onplay: () => {
-              this.props.dispatch({type: "SET_INDEX", payload: index})
-              this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
               this.props.dispatch({type: "SET_PLAYING", payload: true})
             },
+            onload: () => {
+              this.props.howl.play()
+            },
             onend: () => {
-              this.play(this.props.index + 1)
-              this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+              this.skip()
             },
             onpause: () => {
               this.props.dispatch({type: "SET_PLAYING", payload: false})
             }
           })
+      this.props.dispatch({type: "SET_INDEX", payload: index})
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
       this.props.dispatch({type: "SET_HOWL", payload: howl
     })
-    howl.play()
   }
 
   render() {

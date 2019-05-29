@@ -1,35 +1,40 @@
 import React, { Component } from 'react';
 import './SongMenuItem.css'
-import {List, Icon, Menu, Image} from 'semantic-ui-react'
+import {List, Icon, Menu, Image, Modal} from 'semantic-ui-react'
+import NewPlaylistButton from '../NewPlaylistButton/NewPlaylistButton'
 import {connect} from 'react-redux'
 import {Howl} from 'howler'
 import PopupMenu from '../PopupMenu/PopupMenu'
+import '../PopupMenu/PopupMenu.css'
+import AddToPlaylistGroup from '../AddToPlaylistGroup/AddToPlaylistGroup'
 
 class SongMenuItem extends Component {
   state = {
     hover: false,
-    menuOpen: false
+    menuOpen: false,
+    open: false
   }
 
   play = (index) => {
       var howl = new Howl({
             src: this.props.queue[index].url,
             onplay: () => {
-              this.props.dispatch({type: "SET_INDEX", payload: index})
-              this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
               this.props.dispatch({type: "SET_PLAYING", payload: true})
             },
+            onload: () => {
+              this.props.howl.play()
+            },
             onend: () => {
-              this.play(this.props.index + 1)
-              this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+              this.skip()
             },
             onpause: () => {
               this.props.dispatch({type: "SET_PLAYING", payload: false})
             }
           })
+      this.props.dispatch({type: "SET_INDEX", payload: index})
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
       this.props.dispatch({type: "SET_HOWL", payload: howl
     })
-    howl.play()
   }
 
   formatTime = (secs) => {
@@ -39,9 +44,23 @@ class SongMenuItem extends Component {
 
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
+  openModal = () => {
+    this.setState({
+      open: true
+    })
+    this.props.dispatch({type: "SET_SELECTEDSONG", payload: this.props.song})
+  }
 
-  openMenu = (event) => {
-    this.setState({menuOpen: !this.state.menuOpen})
+  closeModal = (e) => {
+    this.setState({
+      open: false
+    })
+  }
+
+  addSong = () => {
+    this.setState({
+      open: true
+    })
     this.props.dispatch({type: "SET_SELECTEDSONG", payload: this.props.song})
   }
 
@@ -76,12 +95,24 @@ class SongMenuItem extends Component {
       (
         this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
       )}
-    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<Icon name="ellipsis horizontal" id="song-options" onClick={this.openMenu}/>:null}</div></div></List.Header>
-    <List.Description  id = "item-description">{this.props.song.artist}{this.state.menuOpen ? <PopupMenu /> : null}</List.Description>
+    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<Icon name="plus" id="song-options" onClick={this.addSong}/>:null}</div></div></List.Header>
+    <List.Description  id = "item-description">{this.props.song.artist}{this.state.openModal ? <PopupMenu /> : null}</List.Description>
   </List.Content>
 </List.Item>
       </List>
       </Menu.Item>
+      <div className="add-playlist-container">
+      <Modal size="fullscreen" open={this.state.open} onClose={this.closeModal} id="new-playlist-modal"
+      closeOnDimmerClick={false}
+      className="add-playlist"
+      >
+          <Modal.Header><div className="icon"><Icon name="times" onClick={this.closeModal}/></div><div>Add to playlist</div></Modal.Header>
+          <NewPlaylistButton />
+          <Modal.Content>
+          <AddToPlaylistGroup />
+          </Modal.Content>
+        </Modal>
+        </div>
       </>
     );
   }

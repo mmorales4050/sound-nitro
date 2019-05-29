@@ -58,8 +58,8 @@ class LargeSongControls extends Component {
     if (this.props.queue != null){
       this.props.howl.stop()
       this.play(this.props.index + 1)
+      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
       this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
-      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.index})
     }
   }
 
@@ -109,7 +109,7 @@ class LargeSongControls extends Component {
       >
       <Menu.Item id="now-playing">
       <div className="place-holder-image">
-      <Icon name="music" size="large"/>
+      <Icon name={this.props.playing ? "volume up" : "volume off"} size="large"/>
       </div>
       <div className="song-info">
       <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>

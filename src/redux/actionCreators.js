@@ -1,41 +1,59 @@
-import Howl from 'howler'
-import {connect} from 'react-redux'
-import React, { Component } from 'react';
+import {Howl} from 'howler'
 
-
-class ActionCreators extends Component {
-
-play = (index) => {
-    this.props.dispatch({type: "SET_HOWL", payload: new Howl({
-          src: this.props.queue[index].url,
-          onplay: () => {
-            this.props.dispatch({type: "SET_INDEX", payload: index})
-            this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[index]})
-            this.props.dispatch({type: "SET_PLAYING", payload: true})
-          },
-          onend: () => {
-            this.play(this.props.index + 1)
-            this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
-          },
-          onpause: () => {
-            this.props.dispatch({type: "SET_PLAYING", payload: false})
-          }
-        })
-  })
-  this.props.howl.play()
+function play(index, queue=null){
+  return (dispatch, getState) => {
+     var howl = new Howl({
+           src: queue[index].url,
+           onplay: () => {
+             dispatch({type: "SET_PLAYING", payload: true})
+           },
+           onload: () => {
+             getState().howl.play()
+           },
+           onend: () => {
+             skip(getState)
+           },
+           onpause: () => {
+             dispatch({type: "SET_PLAYING", payload: false})
+           }
+         })
+     dispatch({type: "SET_INDEX", payload: index})
+     dispatch({type: "SET_CURRENTTRACK", payload: queue[index]})
+     dispatch({type: "SET_HOWL", payload: howl})
+ }
 }
 
-render() {
-return (
-  <div></div>
-  )
+// Plays the playlist given
+function playPlaylist(songs=null){
+  return (dispatch, getState) => {
+    if (getState().howl === null && getState().loading === false){
+      dispatch({
+        type: "SET_CURRENTPLAYLIST", payload: songs
+      })
+      dispatch({
+        type: "SET_QUEUE", payload: songs
+      })
+      dispatch({
+        type: "SET_ORIGNALQUEUE", payload: songs
+      })
+      play(0, songs)(dispatch, getState)
+    }else if(getState().loading === false && getState().howl !== null){
+      if (getState().playing) {
+        getState().howl.pause()
+      }else {
+        getState().howl.play()
+      }
+    }
+  }
 }
 
+function skip(dispatch, getState){
+  if (getState().queue != null){
+    getState().howl.stop()
+    play(getState().index + 1)(dispatch, getState)
+    dispatch({type: "SET_CURRENTTRACK", payload: getState().queue[getState().index + 1]})
+    dispatch({type: "SET_INDEX", payload: getState().index + 1})
+  }
 }
-const mapStateToProps = (store) => ({
-  songs: store.songs,
-  index: store.index,
-  howl: store.howl
-})
 
-export default connect(mapStateToProps)(ActionCreators);
+export {playPlaylist}

@@ -100,9 +100,11 @@ class UploadPage extends Component {
     return (
       <div className="upload-page">
       {this.state.loading === true ?
-        <Dimmer active>
-        <Loader size='massive'>Loading</Loader>
-      </Dimmer>
+        <div id="loading-container">
+        <div id="loading-content">
+        <Loader active inline size="massive" content="Uploading Files"/>
+        </div>
+        </div>
        :
 
       <Form onSubmit={this.uploadFiles}>

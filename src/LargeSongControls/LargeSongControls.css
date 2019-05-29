@@ -107,6 +107,7 @@
 #now-playing .place-holder-image{
   border: solid #b3b3b3 1px;
   width: 60px;
+  min-width: 60px;
   height: 60px;
   display:flex;
   justify-content: center;
