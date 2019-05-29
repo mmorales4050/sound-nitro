@@ -3,12 +3,24 @@ import { Card, Image, Icon} from 'semantic-ui-react'
 import './PlaylistCard.css'
 import  {connect} from 'react-redux';
 import {Howl} from 'howler'
-import {playPlaylist} from "../../redux/actionCreators"
+import {playPlaylist, gotoPlaylistPage} from "../../redux/actionCreators"
 
 
 class PlaylistCard extends Component {
   state = {
     icon: "music"
+  }
+
+  icon = () => {
+    if (this.props.currentPlaylist === this.props.playlist){
+      if (this.props.playing){
+        return "pause circle outline"
+      }else {
+        return "play circle outline"
+      }
+    }else{
+      return "play circle outline"
+    }
   }
 
   play = (index, queue=this.props.queue) => {
@@ -35,45 +47,21 @@ class PlaylistCard extends Component {
 
   gotoPlaylist = () => {
     if (this.state.icon === "music"){
-      this.props.dispatch({type: "SET_DISPLAYPLAYLIST", payload: this.props.playlist})
-      this.props.dispatch({
-        type: "SET_PAGE", payload: "playlist"
-      })
+      this.props.gotoPlaylistPage(this.props.playlist)
     }
   }
 
-  playPlaylist2 = () => {
-    this.props.playPlaylist(this.props.playlist.songs)
+  playPlaylist = () => {
+    this.props.playPlaylist(this.props.playlist)
   }
 
-  playPlaylist1 = () => {
-    console.log("hit")
-    if (this.props.howl === null && this.props.loading === false){
-      this.props.dispatch({
-        type: "SET_CURRENTPLAYLIST", payload: this.props.playlist
-      })
-      this.props.dispatch({
-        type: "SET_QUEUE", payload: this.props.playlist.songs
-      })
-      this.props.dispatch({
-        type: "SET_ORIGNALQUEUE", payload: this.props.playlist.songs
-      })
-      this.play(0, this.props.playlist.songs)
-    }else if(this.props.loading === false && this.props.howl !== null){
-      if (this.props.playing) {
-        this.props.howl.pause()
-      }else {
-        this.props.howl.play()
-      }
-    }
 
-  }
 
   render() {
     return (
       <Card id="album-card">
       <div className="place-holder" onClick={this.gotoPlaylist}>
-      <Icon name={this.state.icon} size="huge" inverted onMouseEnter={()=>this.setState({icon:"play circle outline"})} onMouseLeave={()=>this.setState({icon:"music"})} onClick={this.playPlaylist2}/>
+      <Icon name={this.icon()} size="huge" inverted onMouseEnter={()=>this.setState({icon:"play circle outline"})} onMouseLeave={()=>this.setState({icon:"music"})} onClick={this.playPlaylist}/>
 
       </div>
     <Card.Content id="album-info">
@@ -85,14 +73,18 @@ class PlaylistCard extends Component {
 
 }
 const mapDispatchToProps = (dispatch) => ({
-  playPlaylist: (songs) => {dispatch(playPlaylist(songs))}
+  playPlaylist: (playlist) => {dispatch(playPlaylist(playlist))},
+  gotoPlaylistPage: (playlist => {
+    dispatch(gotoPlaylistPage(playlist))
+  })
 })
 
 const mapStateToProps = (store) => ({
   displayPlaylist: store.displayPlaylist,
   currentPlaylist: store.currentPlaylist,
   loading: store.loading,
-  howl: store.howl
+  howl: store.howl,
+  playing: store.playing
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistCard);

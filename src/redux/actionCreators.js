@@ -1,5 +1,11 @@
 import {Howl} from 'howler'
 
+function gotoPlaylistPage(playlist){
+  return (dispatch, getState) => {
+    dispatch({type: "SET_DISPLAYPLAYLIST", payload: playlist})
+    dispatch({type: "SET_PAGE", payload: "playlist"})
+  }
+}
 function play(index, queue=null){
   return (dispatch, getState) => {
      var howl = new Howl({
@@ -24,19 +30,22 @@ function play(index, queue=null){
 }
 
 // Plays the playlist given
-function playPlaylist(songs=null){
+function playPlaylist(playlist){
   return (dispatch, getState) => {
-    if (getState().howl === null && getState().loading === false){
+    if (getState().loading === false && getState().currentPlaylist !== playlist){
+      if (getState().howl){
+        getState().howl.stop()
+      }
       dispatch({
-        type: "SET_CURRENTPLAYLIST", payload: songs
+        type: "SET_CURRENTPLAYLIST", payload: playlist
       })
       dispatch({
-        type: "SET_QUEUE", payload: songs
+        type: "SET_QUEUE", payload: playlist.songs
       })
       dispatch({
-        type: "SET_ORIGNALQUEUE", payload: songs
+        type: "SET_ORIGNALQUEUE", payload: playlist.songs
       })
-      play(0, songs)(dispatch, getState)
+      play(0, playlist.songs)(dispatch, getState)
     }else if(getState().loading === false && getState().howl !== null){
       if (getState().playing) {
         getState().howl.pause()
@@ -56,4 +65,4 @@ function skip(dispatch, getState){
   }
 }
 
-export {playPlaylist}
+export {playPlaylist, gotoPlaylistPage, play, skip}
