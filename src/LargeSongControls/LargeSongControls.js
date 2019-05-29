@@ -55,7 +55,7 @@ class LargeSongControls extends Component {
   }
 
   skip = () => {
-    if (this.props.queue != null){
+    if (this.props.queue != null && this.props.index + 1 < this.props.queue.length){
       this.props.howl.stop()
       this.play(this.props.index + 1)
       this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
@@ -110,7 +110,7 @@ class LargeSongControls extends Component {
       <Menu.Item id="now-playing">
       <div className="place-holder-image">
       {this.props.currentTrack !== null ? <img src={this.props.currentTrack.image} alt=""/> : null}
-      
+
       </div>
       <div className="song-info">
       <div className="song-name">{this.props.currentTrack === null ? "" : this.props.currentTrack.name}</div>

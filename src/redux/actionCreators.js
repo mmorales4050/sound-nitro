@@ -32,7 +32,7 @@ function play(index, queue=null){
 // Plays the playlist given
 function playPlaylist(playlist){
   return (dispatch, getState) => {
-    if (getState().loading === false && getState().currentPlaylist !== playlist){
+    if (getState().loading === false && getState().currentPlaylist !== playlist && playlist.songs.length > 0){
       if (getState().howl){
         getState().howl.stop()
       }
@@ -46,7 +46,7 @@ function playPlaylist(playlist){
         type: "SET_ORIGNALQUEUE", payload: playlist.songs
       })
       play(0, playlist.songs)(dispatch, getState)
-    }else if(getState().loading === false && getState().howl !== null){
+    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0){
       if (getState().playing) {
         getState().howl.pause()
       }else {

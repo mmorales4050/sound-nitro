@@ -11,8 +11,7 @@ import AddToPlaylistGroup from '../AddToPlaylistGroup/AddToPlaylistGroup'
 class SongMenuItem extends Component {
   state = {
     hover: false,
-    menuOpen: false,
-    open: false
+    menuOpen: false
   }
 
   play = (index) => {
@@ -45,23 +44,12 @@ class SongMenuItem extends Component {
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
   openModal = () => {
-    this.setState({
-      open: true
-    })
+    this.props.dispatch({type: "SET_ADDTOPLAYLIST", payload: this.props.song.id})
     this.props.dispatch({type: "SET_SELECTEDSONG", payload: this.props.song})
   }
 
   closeModal = (e) => {
-    this.setState({
-      open: false
-    })
-  }
-
-  addSong = () => {
-    this.setState({
-      open: true
-    })
-    this.props.dispatch({type: "SET_SELECTEDSONG", payload: this.props.song})
+    this.props.dispatch({type: "SET_ADDTOPLAYLIST", payload: null})
   }
 
   toggleAudio = () => {
@@ -95,14 +83,14 @@ class SongMenuItem extends Component {
       (
         this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
       )}
-    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<Icon name="plus" id="song-options" onClick={this.addSong}/>:null}</div></div></List.Header>
-    <List.Description  id = "item-description">{this.props.song.artist}{this.state.openModal ? <PopupMenu /> : null}</List.Description>
+    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<Icon name="plus" id="song-options" onClick={this.openModal}/>:null}</div></div></List.Header>
+    <List.Description  id = "item-description">{this.props.song.artist}{this.props.addToPlaylistOpen ? <PopupMenu /> : null}</List.Description>
   </List.Content>
 </List.Item>
       </List>
       </Menu.Item>
       <div className="add-playlist-container">
-      <Modal size="fullscreen" open={this.state.open} onClose={this.closeModal} id="new-playlist-modal"
+      <Modal size="fullscreen" open={this.props.addToPlaylistOpen === this.props.song.id} onClose={this.closeModal} id="new-playlist-modal"
       closeOnDimmerClick={false}
       className="add-playlist"
       >
@@ -122,7 +110,8 @@ class SongMenuItem extends Component {
 const mapStateToProps = (store) => ({
   currentTrack: store.currentTrack,
   playing: store.playing,
-  howl: store.howl
+  howl: store.howl,
+  addToPlaylistOpen: store.addToPlaylistOpen
 })
 
 export default connect(mapStateToProps)(SongMenuItem);

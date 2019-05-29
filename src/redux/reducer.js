@@ -34,7 +34,8 @@ const rootReducer = combineReducers({
   howl: howlReducer,
   originalQueue: originalQueueReducer,
   shuffle: shuffleReducer,
-  currentPlaylist: currentPlaylistReducer
+  currentPlaylist: currentPlaylistReducer,
+  addToPlaylistOpen: addToPlaylistOpenReducer
 })
 
 export default rootReducer
@@ -45,6 +46,14 @@ function filesReducer(state=[], action) {
       return action.payload
     case "DELETE_FILES":
       return []
+    default:
+      return state
+    }
+}
+function addToPlaylistOpenReducer(state=null, action) {
+  switch(action.type){
+    case "SET_ADDTOPLAYLIST":
+      return action.payload
     default:
       return state
     }
