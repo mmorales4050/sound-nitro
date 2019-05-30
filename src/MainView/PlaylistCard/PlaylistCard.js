@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Card, Transition, Icon} from 'semantic-ui-react'
 import './PlaylistCard.css'
 import  {connect} from 'react-redux';
-import {Howl} from 'howler'
 import {playPlaylist, gotoPlaylistPage} from "../../redux/actionCreators"
 
 
@@ -17,7 +16,10 @@ class PlaylistCard extends Component {
   }
 
   icon = () => {
-    if (this.props.currentPlaylist === this.props.playlist){
+    if(this.props.page === "playlist"){
+      return ""
+    }
+    if (this.props.currentPlaylist.id === this.props.playlist.id){
       if (this.props.playing){
         return "pause circle outline"
       }else {
@@ -28,29 +30,10 @@ class PlaylistCard extends Component {
     }
   }
 
-  play = (index, queue=this.props.queue) => {
-      var howl = new Howl({
-            src: queue[index].url,
-            onplay: () => {
-              this.props.dispatch({type: "SET_PLAYING", payload: true})
-            },
-            onload: () => {
-              this.props.howl.play()
-            },
-            onend: () => {
-              this.skip()
-            },
-            onpause: () => {
-              this.props.dispatch({type: "SET_PLAYING", payload: false})
-            }
-          })
-      this.props.dispatch({type: "SET_INDEX", payload: index})
-      this.props.dispatch({type: "SET_CURRENTTRACK", payload: queue[index]})
-      this.props.dispatch({type: "SET_HOWL", payload: howl
-    })
-  }
-
   gotoPlaylist = async () => {
+    if(this.props.page === "playlist"){
+      return ""
+    }
     if (this.state.icon === "music" && this.props.page === "playlists"){
       this.setState({visible: !this.state.visible})
       await this.sleep(200)
@@ -59,6 +42,9 @@ class PlaylistCard extends Component {
   }
 
   playPlaylist = () => {
+    if(this.props.page === "playlist"){
+      return ""
+    }
     this.setState({visible: !this.state.visible})
     this.props.playPlaylist(this.props.playlist)
   }

@@ -28,14 +28,38 @@ function play(index, queue=null){
      dispatch({type: "SET_HOWL", payload: howl})
  }
 }
+function shuffle(){
+  return (dispatch, getState) => {
+    if (getState().loading === false){
+      if (!this.state.shuffled) {
+        dispatch({type: "SET_SHUFFLE", payload: true})
+        var shuffledQueue = [...[...getState().queue].sort(() => Math.random() - 0.5)]
+        dispatch({type: "SET_QUEUE", payload: [...shuffledQueue]})
+        if (getState().currentTrack !== null){
+          shuffledQueue.splice(shuffledQueue.indexOf(getState().currentTrack), 1)
+          dispatch({type: "SET_QUEUE", payload: [getState().currentTrack, ...shuffledQueue]})
+        }
+        dispatch({type: "SET_INDEX", payload: 0})
+      }else {
+        this.setState({shuffled: false})
+        dispatch({type: "SET_SHUFFLE", payload: false})
+        dispatch({type: "SET_QUEUE", payload: getState().originalQueue})
+        dispatch({type: "SET_INDEX", payload: getState().originalQueue.indexOf(this.props.currentTrack)})
+      }
+    }
+  }
+}
 
 // Plays the playlist given
-function playPlaylist(playlist){
+function playPlaylist(playlist, index=0){
   return (dispatch, getState) => {
-    if (getState().loading === false && getState().currentPlaylist !== playlist && playlist.songs.length > 0){
+    if (getState().loading === false && getState().currentPlaylist.id !== playlist.id && playlist.songs.length > 0){
       if (getState().howl){
         getState().howl.stop()
       }
+      dispatch({
+        type: "SET_SHUFFLE", payload: false
+      })
       dispatch({
         type: "SET_CURRENTPLAYLIST", payload: playlist
       })
@@ -45,13 +69,16 @@ function playPlaylist(playlist){
       dispatch({
         type: "SET_ORIGNALQUEUE", payload: playlist.songs
       })
-      play(0, playlist.songs)(dispatch, getState)
-    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0){
+      play(index, playlist.songs)(dispatch, getState)
+    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0 && (getState().page === "playlists")){
       if (getState().playing) {
         getState().howl.pause()
       }else {
         getState().howl.play()
       }
+    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0){
+      getState().howl.stop()
+      play(index, playlist.songs)(dispatch, getState)
     }
   }
 }

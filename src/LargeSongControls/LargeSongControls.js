@@ -119,7 +119,7 @@ class LargeSongControls extends Component {
       </Menu.Item>
       <Menu.Item className="song-controls-item">
       <div className="song-controls">
-      <Icon name="shuffle" onClick={this.shuffle} className={`shuffled${this.state.shuffled}`}/>
+      <Icon name="shuffle" onClick={this.shuffle} className={`shuffled${this.props.shuffle}`}/>
       <Icon name="step backward" onClick={this.back}/>
       <Icon name={this.props.playing ? "pause circle outline" : "play circle outline"} id="play-button" onClick={this.toggleAudio}/>
       <Icon name="step forward" onClick={this.skip}/>
@@ -133,7 +133,9 @@ class LargeSongControls extends Component {
       </Menu.Item>
       <Menu.Item className="volume-controls">
       <Icon name="list" className="current-playlist" onClick={()=> {
-        this.props.dispatch({type: "SET_PAGE", payload: "queue"})
+        if(this.props.loading === false){
+          this.props.dispatch({type: "SET_PAGE", payload: "queue"})
+        }
       }}/>
       <div className="temp-hide">
       <Icon name="volume up" />

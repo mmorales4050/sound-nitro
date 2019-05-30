@@ -36,6 +36,16 @@
   padding-left: 40px;
 
 }
+.top-container .playlist-info .icon{
+  padding-left: 30px;
+  color:white;
+  font-size: 14px;
+}
+.top-container .playlist-info .icon:hover {
+  padding-left: 30px;
+  color:white;
+  font-size: 18px;
+}
 
 .top-container .title {
   padding-top: 30px;
@@ -56,4 +66,11 @@
   height: 39px;
   background-color: #fe7903!important;
   color: white!important;
+}
+
+.add-playlist.edit-playlist.delete span{
+  width: 180px;
+}
+.add-playlist.edit-playlist.delete Button{
+  width: 160px;
 }

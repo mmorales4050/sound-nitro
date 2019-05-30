@@ -39,6 +39,7 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer
+let bool = true;
 
 function filesReducer(state=[], action) {
   switch(action.type){
@@ -100,10 +101,10 @@ function indexReducer(state=null, action){
       return state
     }
 }
-function displayPlaylistReducer(state=null, action){
+function displayPlaylistReducer(state={id: "jukyuijghjfhjy776547567"}, action){
   switch(action.type){
     case "SET_DISPLAYPLAYLIST":
-      return action.payload
+      return { bool: !bool, ...action.payload}
     default:
       return state
     }
@@ -166,7 +167,7 @@ function selectedSongReducer(state=null, action){
       return state
     }
 }
-function currentPlaylistReducer(state=null, action){
+function currentPlaylistReducer(state={id: "fdsakfldsjfkasdlfjlasdkjfklasd"}, action){
   switch(action.type){
     case "SET_CURRENTPLAYLIST":
       return action.payload
