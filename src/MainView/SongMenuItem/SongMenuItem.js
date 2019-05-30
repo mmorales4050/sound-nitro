@@ -7,6 +7,8 @@ import PopupMenu from '../PopupMenu/PopupMenu'
 import '../PopupMenu/PopupMenu.css'
 import AddToPlaylistGroup from '../AddToPlaylistGroup/AddToPlaylistGroup'
 import '../../api'
+import {playPlaylist} from "../../redux/actionCreators"
+
 
 class SongMenuItem extends Component {
   state = {
@@ -55,7 +57,7 @@ class SongMenuItem extends Component {
           return playlist
         })})
       })
-    }else if(this.props.page === "playlist"){
+    }else if(this.props.page === "songs"){
       fetch(URL + `playlist_songs/${this.props.song.playlistSongId}`, {
         method: "DELETE",
         headers: {"Content-Type":"application/json"},
@@ -96,12 +98,22 @@ class SongMenuItem extends Component {
   }
 
   toggleAudio = () => {
-    if (this.props.howl !== null){
+    if (this.props.howl !== null && this.props.currentTrack.id === this.props.song.id){
       if (this.props.playing) {
         this.props.howl.pause()
       }else {
         this.props.howl.play()
       }
+    }else if(this.props.page === "playlist"){
+      var index = this.props.displayPlaylist.songs.map(song=>song.id).indexOf(this.props.song.id)
+      this.props.playPlaylist(this.props.displayPlaylist, index)
+    }else if(this.props.page === "queue"){
+      index = this.props.queue.map(song=>song.id).indexOf(this.props.song.id)
+      this.props.playPlaylist({songs: this.props.queue}, index)
+    }
+    else if(this.props.page === "songs"){
+      index = this.props.songs.map(song=>song.id).indexOf(this.props.song.id)
+      this.props.playPlaylist({songs: this.props.songs}, index)
     }
   }
 
@@ -164,6 +176,10 @@ class SongMenuItem extends Component {
   }
 
 }
+const mapDispatchToProps = (dispatch) => ({
+  playPlaylist: (playlist, index) => {dispatch(playPlaylist(playlist, index))},
+  dispatch: dispatch
+})
 
 const mapStateToProps = (store) => ({
   currentTrack: store.currentTrack,
@@ -173,7 +189,8 @@ const mapStateToProps = (store) => ({
   playlists: store.playlists,
   songs: store.songs,
   page: store.page,
-  displayPlaylist: store.displayPlaylist
+  displayPlaylist: store.displayPlaylist,
+  queue: store.queue
 })
 
-export default connect(mapStateToProps)(SongMenuItem);
+export default connect(mapStateToProps, mapDispatchToProps)(SongMenuItem);

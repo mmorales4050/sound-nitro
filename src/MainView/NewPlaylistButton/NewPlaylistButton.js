@@ -15,6 +15,7 @@ class NewPlaylistButton extends Component {
   }
 
   createPlaylist = (event) => {
+    this.setState({open: false})
     fetch(URL + "/playlists", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
@@ -25,7 +26,6 @@ class NewPlaylistButton extends Component {
     .then((response)=> {
       this.props.dispatch({type: "ADD_PLAYLISTS", payload: response})
       this.setState({playlist_name: ""})
-      this.setState({open: false})
     })
   }
 
