@@ -16,6 +16,9 @@ class PlaylistCard extends Component {
   }
 
   icon = () => {
+    if(this.props.page === "playlist"){
+      return ""
+    }
     if (this.props.currentPlaylist === this.props.playlist){
       if (this.props.playing){
         return "pause circle outline"
@@ -28,6 +31,9 @@ class PlaylistCard extends Component {
   }
 
   gotoPlaylist = async () => {
+    if(this.props.page === "playlist"){
+      return ""
+    }
     if (this.state.icon === "music" && this.props.page === "playlists"){
       this.setState({visible: !this.state.visible})
       await this.sleep(200)
@@ -36,6 +42,9 @@ class PlaylistCard extends Component {
   }
 
   playPlaylist = () => {
+    if(this.props.page === "playlist"){
+      return ""
+    }
     this.setState({visible: !this.state.visible})
     this.props.playPlaylist(this.props.playlist)
   }

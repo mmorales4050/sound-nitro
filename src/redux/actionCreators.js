@@ -67,7 +67,7 @@ function playPlaylist(playlist, index=0){
         type: "SET_ORIGNALQUEUE", payload: playlist.songs
       })
       play(index, playlist.songs)(dispatch, getState)
-    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0 && getState().page === ""){
+    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0 && (getState().page === "playlists" || getState().page === "playlist")){
       if (getState().playing) {
         getState().howl.pause()
       }else {
