@@ -102,7 +102,9 @@ class UploadPage extends Component {
       {this.state.loading === true ?
         <div id="loading-container">
         <div id="loading-content">
-        <Loader active inline size="massive" content="Uploading Files"/>
+        <Dimmer active>
+        <Loader active dimmer size="massive" content="Uploading Files"/>
+        </Dimmer>
         </div>
         </div>
        :

@@ -57,7 +57,7 @@ class SongMenuItem extends Component {
           return playlist
         })})
       })
-    }else if(this.props.page === "songs"){
+    }else if(this.props.page === "playlist"){
       fetch(URL + `playlist_songs/${this.props.song.playlistSongId}`, {
         method: "DELETE",
         headers: {"Content-Type":"application/json"},
@@ -137,7 +137,10 @@ class SongMenuItem extends Component {
       (
         this.props.currentTrack ? (this.props.song.url === this.props.currentTrack.url ? <List.Icon name='play' onClick={this.songClicked}/> : <Image src="music_note.png" id="music-note-icon"/>) : <Image src="music_note.png" id="music-note-icon"/>
       )}
-    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<><Icon name="plus" id="song-options" onClick={this.openModal}/><Icon name="edit" id="song-options" onClick={this.editSong}/></>:null}</div></div></List.Header>
+    </div>{this.props.song.name}</div><div><span id="song-duration">{this.formatTime(this.props.song.duration)}</span>{this.state.hover ?<><Icon name="plus" id="song-options" onClick={this.openModal}/>{
+      this.props.page !== 'queue' ?
+      <Icon name="edit" id="song-options" onClick={this.editSong}/> : null
+    }</>:null}</div></div></List.Header>
     <List.Description  id = "item-description">{this.props.song.artist}{this.props.addToPlaylistOpen ? <PopupMenu /> : null}</List.Description>
   </List.Content>
 </List.Item>

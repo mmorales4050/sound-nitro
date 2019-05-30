@@ -53,10 +53,13 @@ function shuffle(){
 // Plays the playlist given
 function playPlaylist(playlist, index=0){
   return (dispatch, getState) => {
-    if (getState().loading === false && getState().currentPlaylist !== playlist && playlist.songs.length > 0){
+    if (getState().loading === false && getState().currentPlaylist.id !== playlist.id && playlist.songs.length > 0){
       if (getState().howl){
         getState().howl.stop()
       }
+      dispatch({
+        type: "SET_SHUFFLE", payload: false
+      })
       dispatch({
         type: "SET_CURRENTPLAYLIST", payload: playlist
       })
@@ -67,7 +70,7 @@ function playPlaylist(playlist, index=0){
         type: "SET_ORIGNALQUEUE", payload: playlist.songs
       })
       play(index, playlist.songs)(dispatch, getState)
-    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0 && (getState().page === "playlists" || getState().page === "playlist")){
+    }else if(getState().loading === false && getState().howl !== null && playlist.songs.length > 0 && (getState().page === "playlists")){
       if (getState().playing) {
         getState().howl.pause()
       }else {

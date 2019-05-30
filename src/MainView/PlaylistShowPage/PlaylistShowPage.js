@@ -12,8 +12,21 @@ class PlaylistShow extends Component {
   state = {
     edit: false
   }
-  playPlaylist = () => {
-    this.props.playPlaylist(this.props.displayPlaylist)
+  playPlaylist = (e) => {
+    if(e.target.className === "ui circular button"){
+      if(this.props.currentPlaylist.id === this.props.displayPlaylist.id){
+        if(this.props.playing === true){
+          this.props.howl.pause()
+
+        }else if(this.props.playing === false){
+          this.props.howl.play()
+        }
+      }else{
+        this.props.playPlaylist(this.props.displayPlaylist)
+      }
+    }else{
+      this.props.playPlaylist(this.props.displayPlaylist)
+    }
   }
 
   editPlaylist = () => {

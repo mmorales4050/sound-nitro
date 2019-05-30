@@ -98,6 +98,11 @@
   color: #272727!important;
   background-color: #272727!important;
 }
+.temp-hide .icon:hover {
+  color: #272727!important;
+  background-color: #272727!important;
+}
+
 
 .temp-hide .bar {
   color: #272727!important;

@@ -133,7 +133,9 @@ class LargeSongControls extends Component {
       </Menu.Item>
       <Menu.Item className="volume-controls">
       <Icon name="list" className="current-playlist" onClick={()=> {
-        this.props.dispatch({type: "SET_PAGE", payload: "queue"})
+        if(this.props.loading === false){
+          this.props.dispatch({type: "SET_PAGE", payload: "queue"})
+        }
       }}/>
       <div className="temp-hide">
       <Icon name="volume up" />

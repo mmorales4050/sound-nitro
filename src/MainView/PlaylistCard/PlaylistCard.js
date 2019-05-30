@@ -19,7 +19,7 @@ class PlaylistCard extends Component {
     if(this.props.page === "playlist"){
       return ""
     }
-    if (this.props.currentPlaylist === this.props.playlist){
+    if (this.props.currentPlaylist.id === this.props.playlist.id){
       if (this.props.playing){
         return "pause circle outline"
       }else {
