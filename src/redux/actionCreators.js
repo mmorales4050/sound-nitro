@@ -17,7 +17,7 @@ function play(index, queue=null){
              getState().howl.play()
            },
            onend: () => {
-             skip(getState)
+             skip(dispatch, getState)
            },
            onpause: () => {
              dispatch({type: "SET_PLAYING", payload: false})
