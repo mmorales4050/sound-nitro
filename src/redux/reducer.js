@@ -135,7 +135,7 @@ function playingReducer(state=false, action){
       return state
     }
 }
-function pageReducer(state="playlists", action){
+function pageReducer(state="songs", action){
   switch(action.type){
     case "SET_PAGE":
       return action.payload

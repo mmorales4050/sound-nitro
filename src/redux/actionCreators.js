@@ -86,9 +86,7 @@ function playPlaylist(playlist, index=0){
 function skip(dispatch, getState){
   if (getState().queue != null){
     getState().howl.stop()
-    play(getState().index + 1)(dispatch, getState)
-    dispatch({type: "SET_CURRENTTRACK", payload: getState().queue[getState().index + 1]})
-    dispatch({type: "SET_INDEX", payload: getState().index + 1})
+    play(getState().index + 1, getState().queue)(dispatch, getState)
   }
 }
 
