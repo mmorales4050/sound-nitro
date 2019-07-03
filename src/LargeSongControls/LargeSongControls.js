@@ -8,7 +8,6 @@ class LargeSongControls extends Component {
   state = {
     time: 0,
     shuffled: false
-
   }
 
   componentDidMount() {
@@ -55,19 +54,23 @@ class LargeSongControls extends Component {
   }
 
   skip = () => {
-    if (this.props.queue != null && this.props.index + 1 < this.props.queue.length){
-      this.props.howl.stop()
-      this.play(this.props.index + 1)
-      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
-      this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+    if (this.props.currentTrack !== null) {
+      if (this.props.queue != null && this.props.index + 1 < this.props.queue.length){
+        this.props.howl.stop()
+        this.play(this.props.index + 1)
+        this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
+        this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+      }
     }
   }
 
   back = () => {
-    if (this.props.queue !== null && this.props.index !== 0){
-      this.props.howl.stop()
-      this.play(this.props.index - 1)
-      this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
+    if (this.props.currentTrack !== null) {
+      if (this.props.queue !== null && this.props.index !== 0){
+        this.props.howl.stop()
+        this.play(this.props.index - 1)
+        this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
+      }
     }
   }
 
