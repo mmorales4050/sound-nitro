@@ -6,9 +6,7 @@ import {Howl} from 'howler'
 
 class LargeSongControls extends Component {
   state = {
-    time: 0,
-    shuffled: false
-
+    time: 0
   }
 
   componentDidMount() {
@@ -55,26 +53,29 @@ class LargeSongControls extends Component {
   }
 
   skip = () => {
-    if (this.props.queue != null && this.props.index + 1 < this.props.queue.length){
-      this.props.howl.stop()
-      this.play(this.props.index + 1)
-      this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
-      this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+    if (this.props.currentTrack !== null) {
+      if (this.props.queue != null && this.props.index + 1 < this.props.queue.length){
+        this.props.howl.stop()
+        this.play(this.props.index + 1)
+        this.props.dispatch({type: "SET_CURRENTTRACK", payload: this.props.queue[this.props.index + 1]})
+        this.props.dispatch({type: "SET_INDEX", payload: this.props.index + 1})
+      }
     }
   }
 
   back = () => {
-    if (this.props.queue !== null && this.props.index !== 0){
-      this.props.howl.stop()
-      this.play(this.props.index - 1)
-      this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
+    if (this.props.currentTrack !== null) {
+      if (this.props.queue !== null && this.props.index !== 0){
+        this.props.howl.stop()
+        this.play(this.props.index - 1)
+        this.props.dispatch({type: "SET_INDEX", payload: this.props.index - 1})
+      }
     }
   }
 
   shuffle = () => {
     if (this.props.loading === false){
-      if (!this.state.shuffled) {
-        this.setState({shuffled: true})
+      if (!this.props.shuffle) {
         this.props.dispatch({type: "SET_SHUFFLE", payload: true})
         var shuffledQueue = [...[...this.props.queue].sort(() => Math.random() - 0.5)]
         this.props.dispatch({type: "SET_QUEUE", payload: [...shuffledQueue]})
@@ -84,7 +85,6 @@ class LargeSongControls extends Component {
         }
         this.props.dispatch({type: "SET_INDEX", payload: 0})
       }else {
-        this.setState({shuffled: false})
         this.props.dispatch({type: "SET_SHUFFLE", payload: false})
         this.props.dispatch({type: "SET_QUEUE", payload: this.props.originalQueue})
         this.props.dispatch({type: "SET_INDEX", payload: this.props.originalQueue.indexOf(this.props.currentTrack)})

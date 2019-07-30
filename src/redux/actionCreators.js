@@ -28,6 +28,8 @@ function play(index, queue=null){
      dispatch({type: "SET_HOWL", payload: howl})
  }
 }
+
+
 function shuffle(){
   return (dispatch, getState) => {
     if (getState().loading === false){
@@ -57,6 +59,7 @@ function playPlaylist(playlist, index=0){
       if (getState().howl){
         getState().howl.stop()
       }
+      
       dispatch({
         type: "SET_SHUFFLE", payload: false
       })
