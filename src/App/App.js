@@ -3,6 +3,10 @@ import 'semantic-ui-css/semantic.min.css'
 import './App.css'
 import LargeSongControls from '../LargeSongControls/LargeSongControls';
 import SideMenu from '../SideMenu/SideMenu'
+import HomePage from '../MainView/HomePage/HomePage'
+import LoginForm from '../MainView/LoginForm/LoginForm';
+import CreateAccountForm from '../MainView/CreateAccountForm/CreateAccountForm';
+
 import MobileSongControls from '../MobileSongControls/MobileSongControls'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import MainView from '../MainView/MainView'
@@ -41,10 +45,13 @@ class App extends Component {
         </div>
         :
         <div className="app">
-          <LargeSongControls />
-          <MainView />
-          <SideMenu />
+        <HomePage />
         </div>
+        // <div className="app">
+        //   <LargeSongControls />
+        //   <MainView />
+        //   <SideMenu />
+        // </div>
       }
       </>
     );

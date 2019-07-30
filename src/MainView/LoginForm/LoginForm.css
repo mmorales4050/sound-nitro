@@ -6,24 +6,6 @@
   text-align: center;
 }
 
-.home-background {
-  margin-top:61px;
-  width: 100%;
-  height: 750px;
-  display:flex;
-  background: linear-gradient(#e66465, #9198e5);
-}
-
-.home-tag-line {
-  color: white;
-  font-size: 60px;
-
-  font-weight: bold;
-  padding-top: 300px;
-  width: 100%;
-  text-align: center;
-}
-
 .home-page .images {
   display: flex;
   justify-content: column;
@@ -40,4 +22,8 @@
 
 .home-page .image3 {
   background-image:
+}
+
+.login-form {
+  padding-top: 70px!important;
 }
