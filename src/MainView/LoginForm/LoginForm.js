@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import './LoginForm.css'
+import  {connect} from 'react-redux';
 
 class LoginForm extends Component {
+
+  changePage = (page) => {
+    this.props.dispatch({type: "SET_PAGE", payload: page})
+  }
 
   componentDidMount() {
     document.body.style = 'background: white;';
@@ -28,7 +33,7 @@ class LoginForm extends Component {
            type='password'
          />
 
-         <Button color='orange' fluid size='large'>
+         <Button color='orange' fluid size='large' onClick={()=>this.changePage("songs")}>
            Login
          </Button>
        </Segment>
@@ -40,7 +45,10 @@ class LoginForm extends Component {
   </Grid>
     );
   }
-
 }
 
-export default LoginForm;
+const mapStateToProps = (store) => ({
+  page: store.page
+})
+
+export default connect(mapStateToProps)(LoginForm);

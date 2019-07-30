@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import  {connect} from 'react-redux';
 
 import {
   Container,
@@ -19,6 +20,10 @@ import './HomePage.css'
 
 class HomePage extends Component {
 
+  changePage = (page) => {
+    this.props.dispatch({type: "SET_PAGE", payload: page})
+  }
+
   render() {
 
     return (
@@ -29,8 +34,8 @@ class HomePage extends Component {
           <Image size='mini' src='whiteIcon.png' style={{ marginRight: '1.5em' }} />
           Sound Nitro
         </Menu.Item>
-        <Menu.Item as='a' header>Login</Menu.Item>
-        <Menu.Item as='a' header>Sign Up</Menu.Item>
+        <Menu.Item as='a' header onClick={()=>this.changePage("loginForm")}>Login</Menu.Item>
+        <Menu.Item as='a' header onClick={()=>this.changePage("createAccountForm")}>Sign Up</Menu.Item>
       </Container>
     </Menu>
 
@@ -53,4 +58,8 @@ class HomePage extends Component {
 
 }
 
-export default HomePage;
+const mapStateToProps = (store) => ({
+  page: store.page
+})
+
+export default connect(mapStateToProps)(HomePage);

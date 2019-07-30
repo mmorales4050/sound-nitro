@@ -34,6 +34,25 @@ class App extends Component {
     this.props.dispatch({type: "SET_LOADING", payload: true})
   }
 
+  showPage = () => {
+    switch(this.props.page){
+      case "loginForm":
+        return <LoginForm />
+      case "createAccountForm":
+        return <CreateAccountForm />
+      case "homePage":
+        return <HomePage />
+      default:
+        return (
+          <>
+          <LargeSongControls />
+          <MainView />
+          <SideMenu />
+          </>
+        )
+    }
+  }
+
   render() {
   return (
       <>
@@ -45,8 +64,11 @@ class App extends Component {
         </div>
         :
         <div className="app">
-        <HomePage />
+        {this.showPage()}
         </div>
+        // <div className="app">
+        // <HomePage />
+        // </div>
         // <div className="app">
         //   <LargeSongControls />
         //   <MainView />
@@ -61,7 +83,8 @@ class App extends Component {
 const mapStateToProps = (store) => ({
   songs: store.songs,
   index: store.index,
-  loading: store.loading
+  loading: store.loading,
+  page: store.page
 })
 
 export default connect(mapStateToProps)(App);

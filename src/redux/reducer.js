@@ -8,7 +8,7 @@ let initialState = {
   songs: [],
   currentTrack: null,
   playing: false,
-  page: "songs",
+  page: "homePage",
   loading: false,
   selectedSong: null,
   index: 0,
@@ -135,7 +135,7 @@ function playingReducer(state=false, action){
       return state
     }
 }
-function pageReducer(state="songs", action){
+function pageReducer(state="homePage", action){
   switch(action.type){
     case "SET_PAGE":
       return action.payload
